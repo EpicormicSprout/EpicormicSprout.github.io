@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=GFS+Didot&family=Pinyon+Script&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -451,6 +452,76 @@ body.past-hero #atlas-footer {
   .journal-inner { width: calc(100vw - 2rem); height: calc(100vh - 2rem); }
   .journal-cover { flex: 0 0 45%; }
   .journal-text-panel { padding: 1.5rem; }
+}
+
+.lexicon-results {
+  margin-top: 1.5rem;
+  overflow-y: auto;
+  max-height: 40vh;
+  scrollbar-width: none;
+}
+.lexicon-results::-webkit-scrollbar { display: none; }
+
+.lexicon-entry {
+  border-bottom: 1px solid rgba(200, 175, 120, 0.08);
+  padding: 1rem 0;
+}
+.lexicon-entry:last-child { border-bottom: none; }
+
+.lexicon-term {
+  font-family: 'GFS Didot', serif;
+  font-size: 1.1rem;
+  color: rgba(200, 175, 120, 0.85);
+  margin-bottom: 0.25rem;
+}
+.lexicon-etymology {
+  font-family: 'Newsreader', serif;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: rgba(90, 150, 115, 0.6);
+  margin-bottom: 0.4rem;
+}
+.lexicon-definition {
+  font-family: 'Newsreader', serif;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: rgba(190, 178, 152, 0.65);
+}
+.lexicon-domains {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.lexicon-tag {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(90, 150, 115, 0.5);
+  border: 1px solid rgba(90, 150, 115, 0.2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+}
+.lexicon-relations {
+  margin-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.lexicon-rel {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(195, 158, 80, 0.35);
+  letter-spacing: 0.05em;
+}
+.lexicon-searching, .lexicon-empty, .lexicon-error {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(190, 178, 152, 0.35);
+  padding: 1rem 0;
 }
 </style>
 </head>
@@ -1051,6 +1122,65 @@ function scrollToPlate(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth' });
   return false;
 }
+
+// ============================================================
+// STERLING LEXICON — Plate 6
+// ============================================================
+(function() {
+  const SUPABASE_URL = 'https://gvfcygdfjimmsrjakodo.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const searchInput = document.querySelector('.noemata-search');
+  const panel = document.querySelector('#plate-6 .journal-text-panel');
+
+  // Create results container
+  const results = document.createElement('div');
+  results.className = 'lexicon-results';
+  panel.appendChild(results);
+
+  let debounceTimer;
+
+  searchInput.addEventListener('input', function() {
+    clearTimeout(debounceTimer);
+    const query = this.value.trim();
+    if (!query) { results.innerHTML = ''; return; }
+    debounceTimer = setTimeout(() => search(query), 300);
+  });
+
+  async function search(query) {
+    results.innerHTML = '<div class="lexicon-searching">searching…</div>';
+
+    const { data, error } = await client
+      .from('terms')
+      .select(`
+        id, term, definition, etymology, notes,
+        term_domains(domains(name)),
+        term_relations!from_term_id(relation_type, to_term_id, terms!to_term_id(term))
+      `)
+      .textSearch('term', query, { type: 'websearch' })
+      .limit(12);
+
+    if (error) { results.innerHTML = '<div class="lexicon-error">search unavailable</div>'; return; }
+    if (!data.length) { results.innerHTML = '<div class="lexicon-empty">no entries found</div>'; return; }
+
+    results.innerHTML = data.map(entry => `
+      <div class="lexicon-entry">
+        <div class="lexicon-term">${entry.term}</div>
+        ${entry.etymology ? `<div class="lexicon-etymology">${entry.etymology}</div>` : ''}
+        <div class="lexicon-definition">${entry.definition}</div>
+        ${entry.term_domains?.length ? `
+          <div class="lexicon-domains">
+            ${entry.term_domains.map(d => `<span class="lexicon-tag">${d.domains.name}</span>`).join('')}
+          </div>` : ''}
+        ${entry.term_relations?.length ? `
+          <div class="lexicon-relations">
+            ${entry.term_relations.map(r => `<span class="lexicon-rel">${r.relation_type} <em>${r.terms.term}</em></span>`).join('')}
+          </div>` : ''}
+      </div>
+    `).join('');
+  }
+})();
 </script>
 
 
