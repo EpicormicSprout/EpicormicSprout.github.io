@@ -631,7 +631,7 @@ body.past-hero #atlas-footer {
           <div class='journal-abstract'>
             <p><span class="drop-cap">CV</span> and selected publications. Content coming soon.</p>
           </div>
-          <a class='journal-link' href='https://github.com' target='_blank'>GitHub →</a>
+          <a class='journal-link' href='CV.pdf' target='_blank'>Curriculum Vitae →</a>
         </div>
       </div>
     </div>
@@ -1158,7 +1158,7 @@ function scrollToPlate(id) {
         term_domains(domains(name)),
         term_relations!from_term_id(relation_type, to_term_id, terms!to_term_id(term))
       `)
-      .ilike('term', `%${query}%`)
+      .or(`term.ilike.%${query}%,definition.ilike.%${query}%`)
       .limit(12);
 
     if (error) { results.innerHTML = '<div class="lexicon-error">search unavailable</div>'; return; }
