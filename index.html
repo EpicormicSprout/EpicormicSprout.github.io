@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>C. S. Rowe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=GFS+Didot&family=Pinyon+Script&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #09080a;
+}
+
+/* =====================
+   MAIN SCROLL CONTAINER
+   ===================== */
+#atlas {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+#atlas::-webkit-scrollbar { display: none; }
+
+/* =====================
+   PLATES — BASE
+   ===================== */
+.plate {
+  width: 100%;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+/* =====================
+   PLATE 0 — NEURAL FIELD
+   ===================== */
+#plate-0 {
+  background: #09080a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#neural-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  filter: blur(0.5px);
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  pointer-events: none;
+}
+.hero-name .dot {
+  font-weight: 400;
+}
+.hero-name {
+  font-family: 'GFS Didot', serif;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: rgba(200, 175, 120, 0.82);
+  margin-bottom: 0.5rem;
+}
+.hero-sub {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(120, 120, 110, 0.8);
+  margin-bottom: 1.2rem;
+}
+.hero-nav a {
+  pointer-events: auto;
+}
+.hero-nav {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+}
+.hero-nav a {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100, 100, 90, 0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.hero-nav a:hover { color: rgba(195, 158, 80, 0.9); }
+
+
+/* =====================
+   PLATES 2-4 — RESEARCH
+   ===================== */
+.journal-plate {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  position: relative;
+  background: #09080a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.journal-inner {
+  width: calc(100vw - 8rem);
+  height: calc(100vh - 6rem);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.journal-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ---------- LEFT: JOURNAL COVER ---------- */
+.journal-cover {
+  flex: 0 0 42%;
+  border: 3px solid rgba(200, 175, 120, 0.2);
+  border-radius: 2px;
+  background: #0e0b07;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cover-header {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+  flex-shrink: 0;
+}
+
+.cover-year {
+  font-family: 'GFS Didot', serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: rgba(195, 158, 80, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid rgba(200, 175, 120, 0.2);
+  border-bottom: 1px solid rgba(200, 175, 120, 0.2);
+  width: 3.8rem;
+  flex-shrink: 0;
+}
+
+.cover-title {
+  font-family: 'GFS Didot', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 0.72;
+  letter-spacing: -0.02em;
+  color: rgba(200, 175, 120, 0.82);
+  text-align: right;
+  padding-right: 1.5rem;
+  flex: 1;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+}
+
+.cover-spine-label {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(195, 158, 80, 0.3);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.veda-spine {
+  writing-mode: horizontal-tb;
+  transform: none;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.6;
+  margin-top: auto;
+  padding-left: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+
+.cover-main {
+  display: flex;
+  flex: 1;
+  padding: 0.75rem 1.5rem 0 0;
+  overflow: hidden;
+}
+
+.cover-volume-info {
+  width: 3.8rem;
+  flex-shrink: 0;
+  text-align: center;
+  color: rgba(195, 158, 80, 0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.cover-figure {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.cover-figure img {
+  width: 90%;
+  flex: 1;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 0 auto;
+  filter: brightness(0.85) contrast(1.1);
+}
+
+.cover-figure-placeholder {
+  flex: 1;
+  border: 1px solid rgba(200, 175, 120, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(195, 158, 80, 0.12);
+  width: 90%;
+  margin: 0 auto;
+}
+
+
+.cover-date {
+  display: block;
+  font-family: 'Pinyon Script', cursive;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: rgba(195, 158, 80, 0.35);
+  text-align: center;
+  border-top: 1px solid rgba(200, 175, 120, 0.15);
+  border-bottom: 1px solid rgba(200, 175, 120, 0.15);
+  padding: 0.6rem 0;
+  flex-shrink: 0;
+}
+
+/* ---------- RIGHT: TEXT PANEL ---------- */
+.journal-text-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 3rem 2rem 3rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.journal-text-panel::-webkit-scrollbar { display: none; }
+
+.journal-field {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(195, 158, 80, 0.3);
+  border-top: 1px solid rgba(200, 175, 120, 0.1);
+  border-bottom: 1px solid rgba(200, 175, 120, 0.1);
+  padding: 0.4rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.journal-abstract {
+  font-family: 'Newsreader', serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(195, 158, 80, 0.65);
+  text-align: justify;
+  hyphens: auto;
+}
+.journal-abstract p { margin: 0; }
+.journal-abstract p + p { text-indent: 2rem; }
+.journal-abstract p:first-child::first-letter {
+  font-family: 'GFS Didot', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 0.75;
+  float: left;
+  margin-right: 0.08em;
+  margin-top: 0.05em;
+  color: rgba(200, 175, 120, 0.65);
+}
+.journal-abstract p:first-child:has(.drop-cap)::first-letter {
+  font-size: inherit;
+  font-weight: inherit;
+  float: none;
+  margin: 0;
+  line-height: inherit;
+  color: inherit;
+}
+.drop-cap {
+  font-family: 'GFS Didot', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 0.75;
+  float: left;
+  margin-right: 0.08em;
+  margin-top: 0.05em;
+  color: rgba(200, 175, 120, 0.65);
+}
+
+.journal-link {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(195, 158, 80, 0.35);
+  text-decoration: none;
+  margin-top: 1.5rem;
+  display: inline-block;
+  border-bottom: 1px solid rgba(195, 158, 80, 0.15);
+  padding-bottom: 0.2rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+.journal-link:hover {
+  color: rgba(195, 158, 80, 0.75);
+  border-color: rgba(195, 158, 80, 0.35);
+}
+
+
+
+.noemata-search {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(200, 175, 120, 0.2);
+  font-family: 'Newsreader', serif;
+  font-size: 0.9rem;
+  color: rgba(195, 158, 80, 0.65);
+  padding: 0.5rem 0;
+  margin-top: 1.5rem;
+  outline: none;
+}
+.noemata-search::placeholder {
+  color: rgba(195, 158, 80, 0.3);
+  font-style: italic;
+}
+
+/* =====================
+   NAV ARROWS + FOOTER
+   ===================== */
+#atlas-nav {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+#atlas-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(195, 158, 80, 0.25);
+  border-top: 1px solid rgba(200, 175, 120, 0.06);
+  background: #09080a;
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+body.past-hero #atlas-nav,
+body.past-hero #atlas-footer {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#atlas-prev, #atlas-next {
+  background: transparent;
+  border: 1px solid rgba(200, 175, 120, 0.15);
+  color: rgba(195, 158, 80, 0.4);
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+#atlas-prev:hover, #atlas-next:hover {
+  border-color: rgba(200, 175, 120, 0.4);
+  color: rgba(200, 175, 120, 0.8);
+}
+
+@media (max-width: 768px) {
+  .journal-body { flex-direction: column; }
+  .journal-inner { width: calc(100vw - 2rem); height: calc(100vh - 2rem); }
+  .journal-cover { flex: 0 0 45%; }
+  .journal-text-panel { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="atlas">
+
+  <!-- PLATE 0: Neural Field -->
+  <div class="plate" id="plate-0">
+    <canvas id="neural-canvas"></canvas>
+    <div class="hero-text">
+      <h1 class="hero-name">C<span class="dot">.</span> S<span class="dot">.</span> Rowe</h1>
+      <p class="hero-sub">Theorist</p>
+      <ul class="hero-nav">
+        <li><a href="#" onclick="return scrollToPlate(2)">Atlas</a></li>
+        <li><a href="#" onclick="return scrollToPlate(5)">Works</a></li>
+        <li><a href="#" onclick="return scrollToPlate(6)">Noemata</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- PLATE 2: VEDA -->
+  <div class='plate journal-plate' id='plate-2'>
+    <div class='journal-inner'>
+      <div class='journal-body'>
+        <div class='journal-cover'>
+          <div class='cover-header'>
+            <h2 class='cover-title'>VEDA</h2>
+            <span class='cover-year'>26</span>
+          </div>
+          <div class='cover-main'>
+            <div class='cover-volume-info'>
+              <span class='cover-spine-label veda-spine'>QA<br>76.87<br>.V43<br>1987</span>
+            </div>
+            <figure class='cover-figure'>
+              <img src='swan.jpg' alt='Golgi 1885 Plate XV — Vertical section through the human pes Hippocampi major' onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class='cover-figure-placeholder' style='display:none;'>Figure unavailable</div>
+            </figure>
+          </div>
+          <div class='cover-date'>Virtual Embodied Dynamic Associations</div>
+        </div>
+        <div class='journal-text-panel'>
+          <div class='journal-field'>Virtual Embodied Dynamic Associations</div>
+          <div class='journal-abstract'>
+            <p>An embodied architecture combining dynamical associative networks & astrocytes with a curious developmental learning paradigm in a 3D virtual world.</p>
+            <p>To come: emergent sleep cycles replaying short term memory via calcium trace analogues evoke slow structural change, bridging localist growth with long term optimization.</p>
+            <p>Iterative maps as reflections of the lived terrain.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATE 4: DANs -->
+  <div class='plate journal-plate' id='plate-4'>
+    <div class='journal-inner'>
+      <div class='journal-body'>
+        <div class='journal-cover'>
+          <div class='cover-header'>
+            <h2 class='cover-title'>DANs</h2>
+            <span class='cover-year'>24</span>
+          </div>
+          <div class='cover-main'>
+            <div class='cover-volume-info'>
+              <span class='cover-spine-label'>The DAN Research Group, Dr. Anthony Beavers</span>
+            </div>
+            <figure class='cover-figure'>
+              <img src='golgi.jpg' alt='Golgi staining — Dynamical Associative Network' onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class='cover-figure-placeholder' style='display:none;'>Figure unavailable</div>
+            </figure>
+          </div>
+          <div class='cover-date'>Dynamical Associative Network, Jets &amp; Sharks</div>
+        </div>
+        <div class='journal-text-panel'>
+          <div class='journal-field'>Neuromorphic Neurophenomenology</div>
+          <div class='journal-abstract'>
+            <p>Attempting to efficiently ground semantics in syntax, by clarifying the nature of the divide between interior and exterior. Meaning as an emergent property of stable agent-environment coupling.</p>
+            <p>What Husserl described as the structure of experience, and what neuroscience describes as the dynamics of perception, are two descriptions of the same process at different scales and from different vantage points.</p>
+            <p>The computational consequence: architectures that stop maintaining internal world models and instead stabilize coupling directly are not just philosophically defensible, they are vastly more efficient. Inspired by the local unsupervised dynamics of biological neural circuits, such architectures grow their structure from interaction itself.</p>
+          </div>
+          <a class='journal-link' href='https://www.afbeavers.net/drg/members' target='_blank'>DAN Research Group, Indiana University →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATE 5: Works -->
+  <div class='plate journal-plate' id='plate-5'>
+    <div class='journal-inner'>
+      <div class='journal-body'>
+        <div class='journal-cover'>
+          <div class='cover-header'>
+            <h2 class='cover-title'>Works</h2>
+            <span class='cover-year'>26</span>
+          </div>
+          <div class='cover-main'>
+            <div class='cover-volume-info'>
+              <span class='cover-spine-label'>Curriculum Vitae</span>
+            </div>
+            <figure class='cover-figure'>
+              <img src='work.jpg' alt='Works' onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class='cover-figure-placeholder' style='display:none;'>Figure unavailable</div>
+            </figure>
+          </div>
+          <div class='cover-date'>Publications & Projects</div>
+        </div>
+        <div class='journal-text-panel'>
+          <div class='journal-field'>Curriculum Vitae</div>
+          <div class='journal-abstract'>
+            <p><span class="drop-cap">CV</span> and selected publications. Content coming soon.</p>
+          </div>
+          <a class='journal-link' href='https://github.com' target='_blank'>GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATE 6: Noemata -->
+  <div class='plate journal-plate' id='plate-6'>
+    <div class='journal-inner'>
+      <div class='journal-body'>
+        <div class='journal-cover'>
+          <div class='cover-header'>
+            <h2 class='cover-title'>Noemata</h2>
+            <span class='cover-year'>26</span>
+          </div>
+          <div class='cover-main'>
+            <div class='cover-volume-info'>
+              <span class='cover-spine-label'>The Sterling Lexicon</span>
+            </div>
+            <figure class='cover-figure'>
+              <img src='dalziel.jpg' alt='Dalziel — Noemata' style='object-fit:contain;flex:none;height:55%;margin:1rem auto auto auto;' onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class='cover-figure-placeholder' style='display:none;'>Figure unavailable</div>
+            </figure>
+          </div>
+          <div class='cover-date'>a work in progress</div>
+        </div>
+        <div class='journal-text-panel'>
+          <div class='journal-field'>Personal Lexicon</div>
+          <div class='journal-abstract'>
+            <p>A personal lexicon of definitions: for unsettled or specific terms. Spanning across philosophy, computation, and the sciences.</p>
+          </div>
+          <input type='text' class='noemata-search' placeholder='search for a term…'>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<div id="atlas-nav">
+  <button id="atlas-prev">↑</button>
+  <button id="atlas-next">↓</button>
+</div>
+
+<div id="atlas-footer">
+  <span>C. S. Rowe</span>
+  <span>Atlas</span>
+</div>
+
+<script>
+// ============================================================
+// NEURAL FIELD — Plate 0
+// ============================================================
+(function() {
+  const canvas = document.getElementById('neural-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [], edges = [], pulses = [];
+
+  const grad3 = [{x:1,y:1},{x:-1,y:1},{x:1,y:-1},{x:-1,y:-1},{x:1,y:0},{x:-1,y:0},{x:0,y:1},{x:0,y:-1}];
+  const pBase = [151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208,89,18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180];
+  const perm = new Array(512), gradP = new Array(512);
+  const noiseSeed = Math.random() * 65536;
+  (function seedNoise(s) {
+    s = Math.floor(s); if (s < 256) s |= s << 8;
+    for (let i = 0; i < 256; i++) {
+      const v = (i & 1) ? pBase[i] ^ (s & 255) : pBase[i] ^ ((s >> 8) & 255);
+      perm[i] = perm[i+256] = v;
+      gradP[i] = gradP[i+256] = grad3[v % 8];
+    }
+  })(noiseSeed);
+  function fade(t) { return t*t*t*(t*(t*6-15)+10); }
+  function lerp(a,b,t) { return (1-t)*a+t*b; }
+  function perlin2(x,y) {
+    let X=Math.floor(x),Y=Math.floor(y);
+    x-=X; y-=Y; X&=255; Y&=255;
+    const n00=gradP[X+perm[Y]].x*x+gradP[X+perm[Y]].y*y;
+    const n01=gradP[X+perm[Y+1]].x*x+gradP[X+perm[Y+1]].y*(y-1);
+    const n10=gradP[X+1+perm[Y]].x*(x-1)+gradP[X+1+perm[Y]].y*y;
+    const n11=gradP[X+1+perm[Y+1]].x*(x-1)+gradP[X+1+perm[Y+1]].y*(y-1);
+    return lerp(lerp(n00,n10,fade(x)),lerp(n01,n11,fade(x)),fade(y));
+  }
+
+  const mouse = { x:-9999,y:-9999,lx:0,ly:0,sx:-9999,sy:-9999,v:0,vs:0,a:0,set:false };
+  const plate0 = document.getElementById('plate-0');
+
+  function updateMouseRaw(x,y) {
+    mouse.x=x; mouse.y=y;
+    if (!mouse.set) { mouse.sx=x; mouse.sy=y; mouse.lx=x; mouse.ly=y; mouse.set=true; }
+  }
+  plate0.addEventListener('mousemove', e => updateMouseRaw(e.clientX, e.clientY));
+  plate0.addEventListener('mouseleave', () => { mouse.x=-9999; mouse.y=-9999; mouse.set=false; mouse.vs=0; });
+  plate0.addEventListener('touchmove', e => { e.preventDefault(); updateMouseRaw(e.touches[0].clientX, e.touches[0].clientY); }, {passive:false});
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    build();
+  }
+
+  function build() {
+    nodes=[]; edges=[]; pulses=[];
+    const count = Math.floor((W*H)/9000);
+    for (let i=0; i<count; i++) {
+      const r=Math.random(), spread=0.6;
+      const gx = W*0.5+(Math.random()-0.5)*W*(0.5+r*spread);
+      const gy = H*0.5+(Math.random()-0.5)*H*(0.5+r*spread);
+      const isAstrocyte = Math.random()<0.3;
+      const layer = Math.floor(Math.random()*6);
+      const n = {
+        x:Math.max(0,Math.min(W,gx)), y:Math.max(0,Math.min(H,gy)),
+        baseX:0, baseY:0, wave:{x:0,y:0}, cursor:{x:0,y:0,vx:0,vy:0},
+        activation:0, synapticFlash:0,
+        decay:0.012+Math.random()*0.018, threshold:0.15+Math.random()*0.3,
+        layer, refractory:0, fired:false,
+        type: isAstrocyte?'astrocyte':'neuron',
+        somaRadius: isAstrocyte?2.5+Math.random()*1.5:3+Math.random()*2,
+        calcium: isAstrocyte?0:undefined,
+        dendrites:[], astroProcesses:[],
+        somaPoints:(()=>{
+          const pts=[], count=8+Math.floor(Math.random()*5);
+          for(let s=0;s<count;s++) {
+            const a=(Math.PI*2/count)*s+(Math.random()-0.5)*(Math.PI*2/count)*0.4;
+            pts.push({a, rVar:0.6+Math.random()*0.8});
+          }
+          return pts;
+        })(),
+      };
+      nodes.push(n);
+    }
+    nodes.forEach(n=>{n.baseX=n.x; n.baseY=n.y;});
+
+    for (let i=0;i<nodes.length;i++) {
+      for (let j=i+1;j<nodes.length;j++) {
+        const d=Math.hypot(nodes[i].baseX-nodes[j].baseX,nodes[i].baseY-nodes[j].baseY);
+        const ld=Math.abs(nodes[i].layer-nodes[j].layer);
+        const maxD=ld===0?120:ld===1?90:60;
+        if (d<maxD && Math.random()<0.18) {
+          const angle=Math.atan2(nodes[j].baseY-nodes[i].baseY,nodes[j].baseX-nodes[i].baseX);
+          const offset=(nodes[j].somaRadius||4)+6;
+          const synX=nodes[j].baseX-Math.cos(angle)*offset;
+          const synY=nodes[j].baseY-Math.sin(angle)*offset;
+          const bendOff=(Math.random()-0.5)*30;
+          const midAngle=angle+Math.PI/2;
+          const cpX=(nodes[i].baseX+synX)/2+Math.cos(midAngle)*bendOff;
+          const cpY=(nodes[i].baseY+synY)/2+Math.sin(midAngle)*bendOff;
+          edges.push({a:i,b:j,weight:0.4+Math.random()*0.6,synBX:synX,synBY:synY,synX,synY,cpBX:cpX,cpBY:cpY,cpX,cpY});
+        }
+      }
+    }
+
+    nodes.forEach((n,i)=>{
+      if (n.type==='neuron') {
+        const incoming=edges.filter(e=>e.b===i);
+        const dendCount=4+Math.floor(Math.random()*3);
+        n.dendrites=[];
+        const longSet=new Set();
+        const longCount=1+(Math.random()<0.5?1:0);
+        while(longSet.size<longCount) longSet.add(Math.floor(Math.random()*dendCount));
+        for (let d=0;d<dendCount;d++) {
+          let angle;
+          if (d<incoming.length) { const src=nodes[incoming[d].a]; angle=Math.atan2(src.baseY-n.baseY,src.baseX-n.baseX)+(Math.random()-0.5)*0.35; }
+          else { angle=(Math.PI*2/dendCount)*d+(Math.random()-0.5)*0.8; }
+          const isLong=longSet.has(d);
+          const len=isLong?140+Math.random()*80:20+Math.random()*20;
+          const bend=(Math.random()-0.5)*0.5;
+          const splitAngle=angle+(Math.random()-0.5)*0.8;
+          const splitLen=isLong?40+Math.random()*30:10+Math.random()*12;
+          const wanderOffsets=Array.from({length:5},()=>(Math.random()-0.5)*2);
+          const splitWander=Array.from({length:5},()=>(Math.random()-0.5)*2);
+          const spineCount=2+Math.floor(Math.random()*3);
+          const spines=Array.from({length:spineCount},()=>({t:0.15+Math.random()*0.75,side:Math.random()<0.5?1:-1,len:3+Math.random()*3,headR:1+Math.random(),angle:(Math.random()-0.5)*0.6}));
+          n.dendrites.push({angle,len,bend,splitAngle,splitLen,isLong,wanderOffsets,splitWander,spines});
+        }
+        const apicalAngle=n.dendrites.reduce((best,d)=>d.len>best.len?d:best,n.dendrites[0]).angle;
+        const axonBaseAngle=apicalAngle+Math.PI+(Math.random()-0.5)*0.4;
+        const outgoing=edges.filter(e=>e.a===i).slice(0,3);
+        const axonTrunkLen=50+Math.random()*40;
+        const axonBranches=outgoing.map(e=>({edgeIdx:edges.indexOf(e),synBX:e.synBX,synBY:e.synBY,bend:(Math.random()-0.5)*0.4,wanderOffsets:Array.from({length:5},()=>(Math.random()-0.5)*2)}));
+        const varicosities=Array.from({length:3+Math.floor(Math.random()*5)},()=>({t:0.1+Math.random()*0.8,r:1.5+Math.random()})).sort((a,b)=>a.t-b.t);
+        n.axon={angle:axonBaseAngle,trunkLen:axonTrunkLen,bend:(Math.random()-0.5)*0.3,branches:axonBranches,wanderOffsets:Array.from({length:5},()=>(Math.random()-0.5)*2),varicosities};
+      } else {
+        const nearbySyn=edges.map(e=>({sx:e.synBX,sy:e.synBY,d:Math.hypot(e.synBX-n.baseX,e.synBY-n.baseY)})).filter(s=>s.d<100&&s.d>5).sort((a,b)=>a.d-b.d).slice(0,6);
+        const procCount=8+Math.floor(Math.random()*5);
+        const longProcs=new Set();
+        const longProcCount=1+Math.floor(Math.random()*3);
+        while(longProcs.size<longProcCount) longProcs.add(Math.floor(Math.random()*procCount));
+        n.astroProcesses=[];
+        for(let p=0;p<procCount;p++){
+          let angle;
+          if(p<nearbySyn.length){const s=nearbySyn[p];angle=Math.atan2(s.sy-n.baseY,s.sx-n.baseX)+(Math.random()-0.5)*0.25;}
+          else{angle=(Math.PI*2/procCount)*p+(Math.random()-0.5)*0.5;}
+          const isLongProc=longProcs.has(p);
+          const len=isLongProc?120+Math.random()*80:15+Math.random()*20;
+          const bend=(Math.random()-0.5)*0.4;
+          const subs=[];
+          for(let s=0;s<2+Math.floor(Math.random()*2);s++){
+            const sa=angle+(Math.random()-0.5)*1.0;
+            const sl=isLongProc?30+Math.random()*25:8+Math.random()*12;
+            const ssa=sa+(Math.random()-0.5)*0.8;
+            const ssl=isLongProc?15+Math.random()*15:4+Math.random()*8;
+            subs.push({angle:sa,len:sl,subAngle:ssa,subLen:ssl,isLong:isLongProc,wanderOffsets:Array.from({length:5},()=>(Math.random()-0.5)*2),subWander:Array.from({length:5},()=>(Math.random()-0.5)*2)});
+          }
+          n.astroProcesses.push({angle,len,bend,subs,isLong:isLongProc,wanderOffsets:Array.from({length:5},()=>(Math.random()-0.5)*2)});
+        }
+      }
+    });
+  }
+
+  const layerColors=[
+    [195,155,75],
+    [215,175,95],
+    [175,138,60],
+    [195,155,75],
+    [215,175,95],
+    [175,138,60],
+  ];
+
+  function taperWidth(wStart,wEnd,t){const tt=Math.min(t,1);return wStart+(wEnd-wStart)*(1-(1-tt)*(1-tt));}
+
+  function drawBranch(x,y,angle,len,bend,alpha,cr,cg,cb,wStart,wEnd,wanderOffsets,tort){
+    const offsets=wanderOffsets||[0,0,0];
+    const segs=offsets.length;
+    const perpAngle=angle+Math.PI/2;
+    const waypoints=[{x,y}];
+    for(let i=1;i<=segs;i++){
+      const t=i/segs;
+      const bx=x+Math.cos(angle)*len*t+Math.cos(angle+bend)*len*t*(1-t)*0.5;
+      const by=y+Math.sin(angle)*len*t+Math.sin(angle+bend)*len*t*(1-t)*0.5;
+      const ws=len*(0.04+(tort||0)*0.08)*Math.sin(t*Math.PI);
+      waypoints.push({x:bx+Math.cos(perpAngle)*offsets[i-1]*ws,y:by+Math.sin(perpAngle)*offsets[i-1]*ws});
+    }
+    const wn=waypoints.length, samples=8, spine=[];
+    for(let s=0;s<=samples;s++){
+      const gt=s/samples, segF=gt*(wn-1), segI=Math.min(Math.floor(segF),wn-2), lt=segF-segI;
+      const p0=waypoints[Math.max(0,segI-1)],p1=waypoints[segI],p2=waypoints[segI+1],p3=waypoints[Math.min(wn-1,segI+2)];
+      const cp1x=p1.x+(p2.x-p0.x)/6,cp1y=p1.y+(p2.y-p0.y)/6;
+      const cp2x=p2.x-(p3.x-p1.x)/6,cp2y=p2.y-(p3.y-p1.y)/6;
+      const u=1-lt;
+      spine.push({
+        x:u*u*u*p1.x+3*u*u*lt*cp1x+3*u*lt*lt*cp2x+lt*lt*lt*p2.x,
+        y:u*u*u*p1.y+3*u*u*lt*cp1y+3*u*lt*lt*cp2y+lt*lt*lt*p2.y,
+        tx:3*u*u*(cp1x-p1.x)+6*u*lt*(cp2x-cp1x)+3*lt*lt*(p2.x-cp2x),
+        ty:3*u*u*(cp1y-p1.y)+6*u*lt*(cp2y-cp1y)+3*lt*lt*(p2.y-cp2y),
+      });
+    }
+    const left=[],right=[];
+    for(let s=0;s<=samples;s++){
+      const pt=spine[s],tLen=Math.hypot(pt.tx,pt.ty)||1;
+      const nx=-pt.ty/tLen,ny=pt.tx/tLen;
+      const hw=taperWidth(wStart,wEnd,s/samples)*0.5;
+      left.push({x:pt.x+nx*hw,y:pt.y+ny*hw});
+      right.push({x:pt.x-nx*hw,y:pt.y-ny*hw});
+    }
+    ctx.beginPath();
+    ctx.moveTo(left[0].x,left[0].y);
+    for(let s=1;s<=samples;s++) ctx.lineTo(left[s].x,left[s].y);
+    for(let s=samples;s>=0;s--) ctx.lineTo(right[s].x,right[s].y);
+    ctx.closePath();
+    const grad=ctx.createLinearGradient(spine[0].x,spine[0].y,spine[samples].x,spine[samples].y);
+    grad.addColorStop(0,`rgba(${cr},${cg},${cb},${alpha*0.46})`);
+    grad.addColorStop(1,`rgba(${cr},${cg},${cb},0)`);
+    ctx.fillStyle=grad; ctx.fill();
+    return{x:spine[samples].x,y:spine[samples].y,path:waypoints,endWidth:taperWidth(wStart,wEnd,1)};
+  }
+
+  function qBez(ax,ay,cx,cy,bx,by,t){const u=1-t;return{x:u*u*ax+2*u*t*cx+t*t*bx,y:u*u*ay+2*u*t*cy+t*t*by};}
+
+  function drawSoma(n,radius,fillStyle){
+    const pts=n.somaPoints,len=pts.length;
+    const coords=pts.map(p=>({x:n.x+Math.cos(p.a)*radius*p.rVar,y:n.y+Math.sin(p.a)*radius*p.rVar}));
+    ctx.beginPath();
+    const last=coords[len-1],first=coords[0];
+    ctx.moveTo((last.x+first.x)/2,(last.y+first.y)/2);
+    for(let i=0;i<len;i++){const curr=coords[i],next=coords[(i+1)%len];ctx.quadraticCurveTo(curr.x,curr.y,(curr.x+next.x)/2,(curr.y+next.y)/2);}
+    ctx.closePath(); ctx.fillStyle=fillStyle; ctx.fill();
+  }
+
+  function drawNeuron(n,ni){
+    const [r,g,bl]=layerColors[n.layer];
+    const flash=n.synapticFlash||0;
+    const alpha=Math.min(0.85,(n.refractory>0?0.08:0.15+n.activation*0.5)+flash*0.35);
+    const fireBoost=n.fired?1.4:1;
+    if(n.activation>0.4||n.fired||flash>0.3){
+      const gr=n.somaRadius*(5+flash*2)*fireBoost;
+      const ga=(alpha*0.092+flash*0.0575)*1.15;
+      const glow=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,gr);
+      glow.addColorStop(0,`rgba(${r},${g},${bl},${ga})`);
+      glow.addColorStop(0.4,`rgba(${r},${g},${bl},${ga*0.17})`);
+      glow.addColorStop(1,`rgba(${r},${g},${bl},0)`);
+      ctx.beginPath(); ctx.arc(n.x,n.y,gr,0,Math.PI*2); ctx.fillStyle=glow; ctx.fill();
+    }
+    const somaR=n.somaRadius*fireBoost;
+    drawSoma(n,somaR,`rgba(${r},${g},${bl},${Math.min(1,alpha*0.345*1.15)})`);
+    const dendAlpha=alpha*0.6;
+    const showDetail=n.activation>0.1||n.fired||flash>0.1;
+    const sr=n.somaRadius;
+    n.dendrites.forEach(d=>{
+      const tipW=d.isLong?0.2:0.4;
+      const tort=d.isLong?0.6:0.3;
+      const ox=n.x+Math.cos(d.angle)*sr, oy=n.y+Math.sin(d.angle)*sr;
+      const result=drawBranch(ox,oy,d.angle,d.len,d.bend,dendAlpha,r,g,bl,5.5,tipW,d.wanderOffsets,tort);
+      drawBranch(result.x,result.y,d.splitAngle,d.splitLen,d.bend*0.5,dendAlpha*(d.isLong?0.4:0.7),r,g,bl,result.endWidth,d.isLong?0.05:0.1,d.splitWander,tort*0.7);
+      if(showDetail&&d.spines&&result.path){
+        ctx.strokeStyle=`rgba(${r},${g},${bl},${dendAlpha*0.17})`; ctx.lineWidth=0.4; ctx.beginPath();
+        const ends=[];
+        d.spines.forEach(sp=>{
+          const pp=sp.t*(result.path.length-1),idx=Math.min(Math.floor(pp),result.path.length-2),frac=pp-idx;
+          const sx=result.path[idx].x+(result.path[idx+1].x-result.path[idx].x)*frac;
+          const sy=result.path[idx].y+(result.path[idx+1].y-result.path[idx].y)*frac;
+          const ba=Math.atan2(result.path[idx+1].y-result.path[idx].y,result.path[idx+1].x-result.path[idx].x);
+          const sa=ba+(Math.PI/2)*sp.side+sp.angle;
+          ctx.moveTo(sx,sy); ctx.lineTo(sx+Math.cos(sa)*sp.len,sy+Math.sin(sa)*sp.len);
+          ends.push({x:sx+Math.cos(sa)*sp.len,y:sy+Math.sin(sa)*sp.len,r:sp.headR});
+        });
+        ctx.stroke();
+        ctx.fillStyle=`rgba(${r},${g},${bl},${dendAlpha*0.23})`;
+        ends.forEach(e=>{ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();});
+      }
+    });
+    if(n.axon){
+      const ax=n.axon;
+      const axOx=n.x+Math.cos(ax.angle)*sr, axOy=n.y+Math.sin(ax.angle)*sr;
+      const trunk=drawBranch(axOx,axOy,ax.angle,ax.trunkLen,ax.bend,alpha*0.5,r,g,bl,4.0,0.5,ax.wanderOffsets,0.25);
+      if(showDetail&&ax.varicosities&&trunk.path){
+        ax.varicosities.forEach(v=>{
+          const pp=v.t*(trunk.path.length-1),idx=Math.min(Math.floor(pp),trunk.path.length-2),frac=pp-idx;
+          const vx=trunk.path[idx].x+(trunk.path[idx+1].x-trunk.path[idx].x)*frac;
+          const vy=trunk.path[idx].y+(trunk.path[idx+1].y-trunk.path[idx].y)*frac;
+          ctx.beginPath();ctx.arc(vx,vy,v.r,0,Math.PI*2);ctx.fillStyle=`rgba(${r},${g},${bl},${alpha*0.46})`;ctx.fill();
+        });
+      }
+      ax.branches.forEach(br=>{
+        const e=edges[br.edgeIdx]; if(!e) return;
+        const brAngle=Math.atan2(e.synY-trunk.y,e.synX-trunk.x);
+        drawBranch(trunk.x,trunk.y,brAngle,Math.hypot(e.synX-trunk.x,e.synY-trunk.y),br.bend,alpha*0.4,r,g,bl,trunk.endWidth,0.1,br.wanderOffsets,0.2);
+        ctx.beginPath();ctx.arc(e.synX,e.synY,1.8,0,Math.PI*2);ctx.fillStyle=`rgba(${r},${g},${bl},${alpha*0.29})`;ctx.fill();
+      });
+    }
+  }
+
+  function drawAstrocyte(n){
+    const ca=n.calcium||0;
+    const baseAlpha=0.1+ca*0.45;
+    const procExtend=1+ca*0.25;
+    if(ca>0.06){
+      const gr=18+ca*30;
+      const glow=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,gr);
+      glow.addColorStop(0,`rgba(225,205,140,${ca*0.29})`);
+      glow.addColorStop(0.25,`rgba(225,205,140,${ca*0.09})`);
+      glow.addColorStop(1,'rgba(225,205,140,0)');
+      ctx.beginPath();ctx.arc(n.x,n.y,gr,0,Math.PI*2);ctx.fillStyle=glow;ctx.fill();
+    }
+    const pAlpha=baseAlpha*0.55, asr=n.somaRadius;
+    n.astroProcesses.forEach(p=>{
+      const pLen=p.len*procExtend;
+      const tipW1=p.isLong?0.2:0.4;
+      const tort=p.isLong?1.2:0.8;
+      const pox=n.x+Math.cos(p.angle)*asr, poy=n.y+Math.sin(p.angle)*asr;
+      const tip=drawBranch(pox,poy,p.angle,pLen,p.bend,pAlpha,225,205,140,5.5,tipW1,p.wanderOffsets,tort);
+      p.subs.forEach(s=>{
+        const sLen=s.len*procExtend;
+        const tipW2=s.isLong?0.08:0.15;
+        const subTip=drawBranch(tip.x,tip.y,s.angle,sLen,0.2,pAlpha*(s.isLong?0.4:0.7),225,205,140,tip.endWidth,tipW2,s.wanderOffsets,tort*1.2);
+        drawBranch(subTip.x,subTip.y,s.subAngle,s.subLen*procExtend,0.1,pAlpha*(s.isLong?0.2:0.4),225,205,140,subTip.endWidth,0.05,s.subWander,tort*1.4);
+      });
+    });
+    drawSoma(n,n.somaRadius,`rgba(225,205,140,${baseAlpha*0.3})`);
+  }
+
+  let spreadQueue=[];
+  function update(time){
+    if(mouse.set){
+      mouse.sx+=(mouse.x-mouse.sx)*0.1; mouse.sy+=(mouse.y-mouse.sy)*0.1;
+      const dx=mouse.x-mouse.lx, dy=mouse.y-mouse.ly, d=Math.hypot(dx,dy);
+      mouse.v=d; mouse.vs+=(d-mouse.vs)*0.1; mouse.vs=Math.min(100,mouse.vs);
+      mouse.lx=mouse.x; mouse.ly=mouse.y; mouse.a=Math.atan2(dy,dx);
+    }
+    spreadQueue=[];
+    nodes.forEach((n,i)=>{
+      const noiseVal=perlin2((n.baseX+time*0.0125)*0.002,(n.baseY+time*0.005)*0.0015)*12;
+      n.wave.x=Math.cos(noiseVal)*20; n.wave.y=Math.sin(noiseVal)*10;
+      const dist=Math.hypot((n.baseX+n.wave.x+n.cursor.x)-mouse.sx,(n.baseY+n.wave.y+n.cursor.y)-mouse.sy);
+      const excitation=dist<180?Math.pow(1-dist/180,2.2)*0.85:0;
+      n.synapticFlash=Math.max(0,(n.synapticFlash||0)-0.04);
+      if(n.refractory>0){n.refractory--;}
+      else{
+        n.activation=Math.min(1,n.activation+excitation);
+        n.activation=Math.max(0,n.activation-n.decay);
+        if(n.activation>n.threshold&&!n.fired){n.fired=true;n.refractory=8+Math.floor(Math.random()*12);spreadQueue.push(i);}
+        else if(n.activation<n.threshold*0.5){n.fired=false;}
+      }
+      if(mouse.set&&mouse.vs>0.5){
+        const px=n.baseX+n.wave.x+n.cursor.x, py=n.baseY+n.wave.y+n.cursor.y;
+        const cd=Math.hypot(px-mouse.sx,py-mouse.sy), l=Math.max(175,mouse.vs);
+        if(cd<l){const s=1-cd/l,f=Math.cos(cd*0.001)*s;n.cursor.vx+=Math.cos(mouse.a)*f*l*mouse.vs*0.00006;n.cursor.vy+=Math.sin(mouse.a)*f*l*mouse.vs*0.00006;}
+      }
+      n.cursor.vx+=(0-n.cursor.x)*0.003; n.cursor.vy+=(0-n.cursor.y)*0.003;
+      n.cursor.vx*=0.96; n.cursor.vy*=0.96;
+      n.cursor.x+=n.cursor.vx*0.8; n.cursor.y+=n.cursor.vy*0.8;
+      n.cursor.x=Math.min(40,Math.max(-40,n.cursor.x)); n.cursor.y=Math.min(40,Math.max(-40,n.cursor.y));
+      n.x=n.baseX+n.wave.x+n.cursor.x; n.y=n.baseY+n.wave.y+n.cursor.y;
+    });
+    edges.forEach(e=>{
+      const src=nodes[e.a],tgt=nodes[e.b];
+      const dsx=src.x-src.baseX,dsy=src.y-src.baseY,dtx=tgt.x-tgt.baseX,dty=tgt.y-tgt.baseY;
+      e.synX=e.synBX+dtx; e.synY=e.synBY+dty; e.cpX=e.cpBX+(dsx+dtx)/2; e.cpY=e.cpBY+(dsy+dty)/2;
+    });
+    spreadQueue.forEach(i=>{
+      edges.forEach((e,ei)=>{
+        if(e.a!==i&&e.b!==i) return;
+        if(e.a===i&&nodes[i].type==='neuron') pulses.push({edgeIdx:ei,srcIdx:i,tgtIdx:e.b,t:0,speed:0.008+Math.random()*0.007,layer:nodes[i].layer,delivered:false});
+        if(e.b===i&&nodes[i].type==='neuron') pulses.push({edgeIdx:ei,srcIdx:i,tgtIdx:e.a,t:0,speed:0.008+Math.random()*0.007,layer:nodes[i].layer,delivered:false,reverse:true});
+      });
+    });
+    pulses.forEach(p=>{
+      p.t+=p.speed;
+      if(p.t>=1&&!p.delivered){p.delivered=true;const tgt=nodes[p.tgtIdx];if(tgt&&tgt.refractory===0){const e=edges[p.edgeIdx];tgt.activation=Math.min(1,tgt.activation+(e?e.weight:0.5)*0.2);tgt.synapticFlash=1;}}
+    });
+    pulses=pulses.filter(p=>p.t<1.15);
+    nodes.forEach(a=>{
+      if(a.type!=='astrocyte') return;
+      let ca=0;
+      nodes.forEach(n=>{if(n.type!=='neuron') return;const d=Math.hypot(n.x-a.x,n.y-a.y);if(d<130) ca+=n.activation*(1-d/130);});
+      a.calcium=Math.min(1,Math.max(0,(a.calcium||0)*0.93+ca*0.08));
+    });
+  }
+
+  function draw(time){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach((n,i)=>{if(n.type==='astrocyte') drawAstrocyte(n);});
+    nodes.forEach((n,i)=>{
+      if(n.type!=='neuron') return;
+      if(n.activation<0.015&&n.refractory===0&&(n.synapticFlash||0)<0.05) return;
+      drawNeuron(n,i);
+    });
+    pulses.forEach(p=>{
+      if(p.t>1) return;
+      const src=nodes[p.srcIdx]; if(!src||!src.axon) return;
+      const e=edges[p.edgeIdx]; if(!e) return;
+      const [r,g,bl]=[195,155,75];
+      const ax=src.axon;
+      const ttx=src.x+Math.cos(ax.angle)*ax.trunkLen, tty=src.y+Math.sin(ax.angle)*ax.trunkLen;
+      const brLen=Math.hypot(e.synX-ttx,e.synY-tty);
+      const totalLen=ax.trunkLen+brLen, trunkFrac=ax.trunkLen/totalLen;
+      let pos;
+      if(p.t<=trunkFrac){const lt=p.t/trunkFrac;const cpx=src.x+Math.cos(ax.angle+ax.bend)*ax.trunkLen*0.5,cpy=src.y+Math.sin(ax.angle+ax.bend)*ax.trunkLen*0.5;pos=qBez(src.x,src.y,cpx,cpy,ttx,tty,lt);}
+      else{const bt=(p.t-trunkFrac)/(1-trunkFrac);const brAngle=Math.atan2(e.synY-tty,e.synX-ttx);const br=ax.branches.find(b=>b.edgeIdx===p.edgeIdx);const bnd=br?br.bend:0;const cpx=ttx+Math.cos(brAngle+bnd)*brLen*0.5,cpy=tty+Math.sin(brAngle+bnd)*brLen*0.5;pos=qBez(ttx,tty,cpx,cpy,e.synX,e.synY,bt);}
+      const pa=Math.min(1,(1-p.t)*1.2);
+      const pg=ctx.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,6);
+      pg.addColorStop(0,`rgba(${r},${g},${bl},${pa*0.6})`); pg.addColorStop(1,`rgba(${r},${g},${bl},0)`);
+      ctx.beginPath();ctx.arc(pos.x,pos.y,6,0,Math.PI*2);ctx.fillStyle=pg;ctx.fill();
+      ctx.beginPath();ctx.arc(pos.x,pos.y,1.5,0,Math.PI*2);ctx.fillStyle=`rgba(${r},${g},${bl},${pa*0.5})`;ctx.fill();
+    });
+  }
+
+  function loop(time){update(time);draw(time);requestAnimationFrame(loop);}
+  window.addEventListener('resize',resize);
+  resize();
+  requestAnimationFrame(loop);
+})();
+
+// ============================================================
+// LIQUID FOREST — Plate 1
+// ============================================================
+
+// ============================================================
+// ATLAS NAVIGATION
+// ============================================================
+(function(){
+  const atlas = document.getElementById('atlas');
+  const prev = document.getElementById('atlas-prev');
+  const next = document.getElementById('atlas-next');
+  if (!atlas) return;
+
+  // Show nav/footer after scrolling past plate 0
+  atlas.addEventListener('scroll', function(){
+    document.body.classList.toggle('past-hero', atlas.scrollTop > window.innerHeight * 0.5);
+  });
+
+  if (prev && next) {
+    next.addEventListener('click', () => atlas.scrollBy({top: window.innerHeight, behavior:'smooth'}));
+    prev.addEventListener('click', () => atlas.scrollBy({top: -window.innerHeight, behavior:'smooth'}));
+  }
+})();
+
+function scrollToPlate(id) {
+  const el = document.getElementById('plate-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  return false;
+}
+</script>
+
+
+</body>
+</html>
