@@ -1158,7 +1158,7 @@ function scrollToPlate(id) {
         term_domains(domains(name)),
         term_relations!from_term_id(relation_type, to_term_id, terms!to_term_id(term))
       `)
-      .textSearch('term', query, { type: 'websearch' })
+      .ilike('term', `%${query}%`)
       .limit(12);
 
     if (error) { results.innerHTML = '<div class="lexicon-error">search unavailable</div>'; return; }
