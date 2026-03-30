@@ -1173,7 +1173,7 @@ function scrollToPlate(id) {
         term_domains(domains(name)),
         term_relations!from_term_id(relation_type, to_term_id, terms!to_term_id(term))
       `)
-      .or(`term.ilike.%${query}%,definition.ilike.%${query}%`)
+      .or(`term.ilike.${query}%,definition.ilike.%${query}%`)
       .limit(12);
 
     if (error) { results.innerHTML = '<div class="lexicon-error">search unavailable</div>'; return; }
