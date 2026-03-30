@@ -536,7 +536,7 @@ body.past-hero #atlas-footer {
       <h1 class="hero-name">C<span class="dot">.</span> S<span class="dot">.</span> Rowe</h1>
       <p class="hero-sub">Theorist</p>
       <ul class="hero-nav">
-        <li><a href="#" onclick="return scrollToPlate(2)">Atlas</a></li>
+        <li><a href="#" onclick="return scrollToPlate(2)">Projects</a></li>
         <li><a href="#" onclick="return scrollToPlate(5)">Works</a></li>
         <li><a href="#" onclick="return scrollToPlate(6)">Lexicon</a></li>
       </ul>
@@ -659,7 +659,7 @@ body.past-hero #atlas-footer {
         <div class='journal-text-panel'>
           <div class='journal-field'>Lexicon</div>
           <div class='journal-abstract'>
-            <p>Definitions of unsettled and specific terms; across philosophy, computation, and other abstractions from the lived world.</p>
+            <p>Definitions from life, philosophy, &amp; computation.</p>
           </div>
           <input type='text' class='noemata-search' placeholder='search for a term…'>
         </div>
@@ -677,7 +677,7 @@ body.past-hero #atlas-footer {
 
 <div id="atlas-footer">
   <span>C. S. Rowe</span>
-  <span>Atlas</span>
+  <span id="footer-plate-label"></span>
 </div>
 
 <script>
@@ -1106,9 +1106,25 @@ body.past-hero #atlas-footer {
   const next = document.getElementById('atlas-next');
   if (!atlas) return;
 
-  // Show nav/footer after scrolling past plate 0
+  // Show nav/footer after scrolling past plate 0 + update footer label
+  const footerLabel = document.getElementById('footer-plate-label');
+  const plates = Array.from(atlas.querySelectorAll('.plate, .journal-plate'));
+  const plateTitles = {};
+  plates.forEach(p => {
+    const t = p.querySelector('.cover-title');
+    plateTitles[p.id] = t ? t.textContent : '';
+  });
+
   atlas.addEventListener('scroll', function(){
     document.body.classList.toggle('past-hero', atlas.scrollTop > window.innerHeight * 0.5);
+    if (footerLabel) {
+      const scrollMid = atlas.scrollTop + window.innerHeight * 0.5;
+      let current = '';
+      plates.forEach(p => {
+        if (p.offsetTop <= scrollMid) current = plateTitles[p.id] || '';
+      });
+      footerLabel.textContent = current;
+    }
   });
 
   if (prev && next) {
