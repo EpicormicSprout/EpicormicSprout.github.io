@@ -6,7 +6,7 @@
 <title>C. S. Rowe</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=GFS+Didot&family=Pinyon+Script&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=GFS+Didot&family=Pinyon+Script&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;700&family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -350,6 +350,16 @@ html, body {
   margin-top: 0.05em;
   color: rgba(200, 175, 120, 0.65);
 }
+.drop-cap-kanji::first-letter {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 0.75;
+  float: left;
+  margin-right: 0.08em;
+  margin-top: 0.05em;
+  color: rgba(220, 210, 185, 0.65);
+}
 
 .journal-link {
   font-family: 'Archivo', sans-serif;
@@ -523,6 +533,118 @@ body.past-hero #atlas-footer {
   color: rgba(190, 178, 152, 0.35);
   padding: 1rem 0;
 }
+
+/* --- GLITCH --- */
+.plate-glitching {
+  animation: glitch-skew 4s infinite;
+}
+.plate-glitching::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.03) 0,
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  animation: plate-noise 0.5s infinite;
+  z-index: 200;
+}
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(-2deg); }
+  40% { transform: skew(0.5deg); }
+  60% { transform: skew(-0.5deg); }
+  80% { transform: skew(1deg); }
+  100% { transform: skew(0deg); }
+}
+@keyframes plate-noise {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.8; }
+}
+
+/* --- SCANLINE --- */
+.plate-scanline {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 150;
+  animation: scanline 8s linear infinite;
+}
+@keyframes scanline {
+  0% { transform: translateY(-10%); }
+  100% { transform: translateY(10%); }
+}
+
+/* --- TERMINAL OVERLAY --- */
+.terminal-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(8, 8, 13, 0.92);
+  z-index: 160;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  font-family: 'Courier New', monospace;
+}
+.terminal-text {
+  font-size: 0.95rem;
+  color: rgba(90, 155, 120, 0.9);
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  min-height: 1.5rem;
+  text-align: center;
+}
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.terminal-cursor {
+  color: rgba(90, 155, 120, 0.9);
+  font-size: 1.2rem;
+  animation: blink 1s step-end infinite;
+  display: none;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(90, 155, 120, 0.9);
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  caret-color: transparent;
+  width: 12rem;
+  text-align: center;
+  display: none;
+}
+.terminal-response {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: rgba(90, 155, 120, 0.6);
+  letter-spacing: 0.15em;
+  min-height: 1.5rem;
+  text-align: center;
+}
 </style>
 </head>
 <body>
@@ -638,6 +760,15 @@ body.past-hero #atlas-footer {
 
   <!-- PLATE 6: Noemata -->
   <div class='plate journal-plate' id='plate-6'>
+    <div class="plate-scanline" style="display:none"></div>
+    <div class="terminal-overlay" style="display:none">
+      <div class="terminal-text"></div>
+      <div class="terminal-input-row">
+        <span class="terminal-cursor">█</span>
+        <input type="password" class="terminal-input" autocomplete="off">
+      </div>
+      <div class="terminal-response"></div>
+    </div>
     <div class='journal-inner'>
       <div class='journal-body'>
         <div class='journal-cover'>
@@ -1169,12 +1300,28 @@ function scrollToPlate(id) {
     const { data, error } = await client
       .from('terms')
       .select(`
-        id, term, definition, etymology, notes,
+        id, term, definition, etymology, notes, source,
         term_domains(domains(name)),
         term_relations!from_term_id(relation_type, to_term_id, terms!to_term_id(term))
       `)
       .or(`term.ilike.${query}%,definition.ilike.%${query}%`)
+      .order('term', { ascending: true })
       .limit(12);
+
+    // Sort results so exact term matches come first
+    if (data) {
+      data.sort((a, b) => {
+        const aExact = a.term.toLowerCase() === query.toLowerCase();
+        const bExact = b.term.toLowerCase() === query.toLowerCase();
+        if (aExact && !bExact) return -1;
+        if (!aExact && bExact) return 1;
+        const aStarts = a.term.toLowerCase().startsWith(query.toLowerCase());
+        const bStarts = b.term.toLowerCase().startsWith(query.toLowerCase());
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+        return 0;
+      });
+    }
 
     if (error) { results.innerHTML = '<div class="lexicon-error">search unavailable</div>'; return; }
     if (!data.length) { results.innerHTML = '<div class="lexicon-empty">no entries found</div>'; return; }
@@ -1194,6 +1341,101 @@ function scrollToPlate(id) {
           </div>` : ''}
       </div>
     `).join('');
+
+    if (query.toLowerCase() === 'pi') {
+      const plate = document.getElementById('plate-6');
+      const terminal = plate.querySelector('.terminal-overlay');
+      const terminalText = plate.querySelector('.terminal-text');
+      const terminalInput = plate.querySelector('.terminal-input');
+      const terminalCursor = plate.querySelector('.terminal-cursor');
+      const terminalResponse = plate.querySelector('.terminal-response');
+      const scanline = plate.querySelector('.plate-scanline');
+
+      function resetPlate() {
+        plate.classList.remove('plate-glitching');
+        scanline.style.display = 'none';
+        terminal.style.display = 'none';
+        terminalText.textContent = '';
+        terminalText.style.display = '';
+        terminalText.style.opacity = '';
+        terminalText.style.transition = '';
+        terminalInput.value = '';
+        terminalInput.style.display = 'none';
+        terminalCursor.style.display = 'none';
+        terminalResponse.textContent = '';
+      }
+
+      // Step 1 — glitch the plate after 1.5s
+      setTimeout(() => {
+        plate.classList.add('plate-glitching');
+        scanline.style.display = 'block';
+
+        // Step 2 — show terminal after 1.5s of glitching
+        setTimeout(() => {
+          terminal.style.display = 'flex';
+
+          // Step 3 — typewriter: "enter your password.."
+          const prompt = 'enter your password..';
+          let i = 0;
+          const typeInterval = setInterval(() => {
+            terminalText.textContent += prompt[i];
+            i++;
+            if (i >= prompt.length) {
+              clearInterval(typeInterval);
+
+              // Step 4 — text fades out, cursor appears
+              setTimeout(() => {
+                terminalText.style.transition = 'opacity 0.6s';
+                terminalText.style.opacity = '0';
+
+                setTimeout(() => {
+                  terminalText.style.display = 'none';
+                  terminalCursor.style.display = 'inline';
+                  terminalInput.style.display = 'inline';
+                  terminalInput.focus();
+                }, 600);
+              }, 800);
+            }
+          }, 60);
+
+          // Step 5 — handle password entry
+          terminalInput.addEventListener('keydown', async function handler(e) {
+            if (e.key === 'Enter') {
+              const val = terminalInput.value;
+              terminalCursor.style.display = 'none';
+              terminalInput.style.display = 'none';
+
+              try {
+                const res = await fetch('https://gvfcygdfjimmsrjakodo.supabase.co/functions/v1/verify-password', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ password: val })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                  terminalResponse.textContent = 'access granted.';
+                  setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                  }, 1000);
+                } else {
+                  terminalResponse.textContent = 'access denied.';
+                  setTimeout(() => {
+                    resetPlate();
+                  }, 1500);
+                }
+              } catch (e) {
+                terminalResponse.textContent = 'connection error.';
+                setTimeout(() => {
+                  resetPlate();
+                }, 1500);
+              }
+            }
+          });
+
+        }, 1500);
+      }, 1500);
+    }
   }
 })();
 </script>
