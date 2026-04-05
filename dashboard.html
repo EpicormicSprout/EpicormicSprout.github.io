@@ -1037,11 +1037,55 @@ async function buildLexicon(container) {
   container.style.flexDirection = 'column';
   container.innerHTML = `
     <div style="flex-shrink:0;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px">
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+        <input class="mini-search" id="lex-new-term" placeholder="new term..." style="font-size:0.85rem;padding:6px 0">
+        <input class="mini-search" id="lex-new-etym" placeholder="etymology (optional)..." style="font-size:0.8rem;padding:6px 0">
+        <textarea class="mini-search" id="lex-new-def" placeholder="definition..." style="font-size:0.8rem;padding:6px 0;resize:none;height:60px;font-family:var(--font-body)"></textarea>
+        <input class="mini-search" id="lex-new-source" placeholder="source (optional)..." style="font-size:0.75rem;padding:6px 0">
+        <button onclick="addLexEntry()" style="background:transparent;border:1px solid var(--border);color:var(--amber-dim);font-family:var(--font-mono);font-size:0.65rem;padding:6px 12px;cursor:pointer;border-radius:var(--radius);text-align:left;letter-spacing:0.1em">add entry →</button>
+        <div id="lex-add-status" style="font-family:var(--font-mono);font-size:0.58rem;color:var(--verdigris-dim);min-height:14px"></div>
+      </div>
       <input class="mini-search" id="lex-search" placeholder="search terms..." oninput="lexSearch(this.value)" style="font-size:0.9rem;padding:8px 0;width:100%">
     </div>
     <div id="lex-results" style="flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;display:flex;flex-direction:column;gap:10px;padding-right:4px"></div>
   `;
   lexSearch('');
+}
+
+async function addLexEntry() {
+  const term = document.getElementById('lex-new-term').value.trim();
+  const def = document.getElementById('lex-new-def').value.trim();
+  const etym = document.getElementById('lex-new-etym').value.trim();
+  const source = document.getElementById('lex-new-source').value.trim();
+  const status = document.getElementById('lex-add-status');
+
+  if (!term || !def) {
+    status.textContent = 'term and definition required';
+    status.style.color = 'rgba(195,80,80,0.6)';
+    return;
+  }
+
+  const { error } = await db.from('terms').insert({
+    term,
+    definition: def,
+    etymology: etym || null,
+    source: source || null,
+    date_added: new Date().toISOString().split('T')[0]
+  });
+
+  if (error) {
+    status.textContent = 'error — ' + error.message;
+    status.style.color = 'rgba(195,80,80,0.6)';
+  } else {
+    status.textContent = 'entry added';
+    status.style.color = 'var(--verdigris-dim)';
+    document.getElementById('lex-new-term').value = '';
+    document.getElementById('lex-new-def').value = '';
+    document.getElementById('lex-new-etym').value = '';
+    document.getElementById('lex-new-source').value = '';
+    lexSearch('');
+    setTimeout(() => status.textContent = '', 3000);
+  }
 }
 
 async function lexSearch(query) {
