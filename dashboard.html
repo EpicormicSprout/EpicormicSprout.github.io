@@ -823,7 +823,7 @@ const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Auth
-const token = sessionStorage.getItem('dashboard_token');
+const token = sessionStorage.getItem('dashboard_token') || sessionStorage.getItem('auth_token') || sessionStorage.getItem('token');
 if (!token) window.location.href = 'index.html';
 
 // ========================
