@@ -51,7 +51,7 @@ html.dark body { background: #07060a; }
    THEME TOGGLE
    ======================== */
 .theme-toggle {
-  --base-scale: 18px;
+  --base-scale: 22px;
   --toggle-width: 5.625em;
   --toggle-height: 2.5em;
   --radius-pill: 100em;
@@ -73,9 +73,8 @@ html.dark body { background: #07060a; }
   border: none;
   cursor: pointer;
   position: fixed;
-  top: calc(7.5% - 36px);
-  right: 28px;
-  left: auto;
+  top: 18px;
+  left: 22px;
   z-index: 1000;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
 }
@@ -191,8 +190,7 @@ html.dark .theme-toggle__container .theme-toggle__clouds { transform: translateY
   border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
-  flex: 1;
-  min-width: 52px;
+  flex: 0 0 62px;
   transition: var(--transition);
   background-size: cover;
   background-position: center;
@@ -200,7 +198,7 @@ html.dark .theme-toggle__container .theme-toggle__clouds { transform: translateY
 }
 
 .panel.active {
-  flex: 10;
+  flex: 10 0 62px;
   cursor: default;
 }
 
