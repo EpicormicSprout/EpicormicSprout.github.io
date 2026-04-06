@@ -1415,6 +1415,7 @@ function scrollToPlate(id) {
 
                 if (data.success) {
                   terminalResponse.textContent = 'access granted.';
+                  sessionStorage.setItem('dashboard_token', 'true');
                   setTimeout(() => {
                     window.location.href = 'dashboard.html';
                   }, 1000);
