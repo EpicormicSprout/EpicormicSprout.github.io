@@ -175,11 +175,11 @@ html.dark .theme-toggle__container .theme-toggle__clouds { transform: translateY
   flex-direction: row;
   gap: var(--gap);
   height: 85%;
-  width: auto;
-  max-width: 100%;
   position: absolute;
   right: 20px;
+  left: 20px;
   z-index: 10;
+  justify-content: flex-end;
   box-sizing: border-box;
 }
 
@@ -191,7 +191,9 @@ html.dark .theme-toggle__container .theme-toggle__clouds { transform: translateY
   border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
-  flex: 0 0 62px;
+  width: 62px;
+  flex-shrink: 0;
+  flex-grow: 0;
   transition: var(--transition);
   background-size: cover;
   background-position: center;
@@ -199,8 +201,9 @@ html.dark .theme-toggle__container .theme-toggle__clouds { transform: translateY
 }
 
 .panel.active {
-  flex: 10 0 62px;
-  max-width: 65%;
+  flex-grow: 1;
+  width: auto;
+  max-width: 65vw;
   cursor: default;
 }
 
@@ -228,7 +231,7 @@ html.dark .theme-toggle__container .theme-toggle__clouds { transform: translateY
 .panel.active .frost {
   opacity: 1;
   pointer-events: all;
-  right: var(--edge);
+  right: 18%;
 }
 
 /* Icon — bottom center when collapsed */
