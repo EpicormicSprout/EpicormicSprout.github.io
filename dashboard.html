@@ -1044,6 +1044,9 @@ async function buildPapers(container) {
       <div class="paper-authors">${p.authors?.join(', ') || ''} ${p.year ? '· ' + p.year : ''}</div>
       ${p.abstract ? `<div class="paper-abstract">${p.abstract.slice(0, 280)}...</div>` : ''}
       ${p.tags?.length ? `<div class="paper-tags">${p.tags.map(t => `<span class="paper-tag">${t}</span>`).join('')}</div>` : ''}
+      <div style="margin-top:10px;text-align:right">
+        <a href="reading_room.html?key=${p.zotero_key}" style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber-dim);text-decoration:none" onmouseover="this.style.color='var(--amber)'" onmouseout="this.style.color='var(--amber-dim)'">open in reading room →</a>
+      </div>
     </div>
   `).join('');
 }
