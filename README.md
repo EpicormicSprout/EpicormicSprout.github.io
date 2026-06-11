@@ -1,3 +1,3 @@
 what I'm up to...
 
-https://epicormicsprout.github.io/landing.html
+https://epicormicsprout.github.io
