@@ -491,26 +491,21 @@ section {
   }
 
   .welcome-bottom {
-    display: flex;
-    align-items: flex-end;
-    gap: 4vw;
-    padding: 6vw 0 0 6vw;
-    flex-wrap: wrap;
+    display: flow-root;
+    padding: 6vw;
   }
 
   .bio {
     position: static;
-    width: 60%;
-    min-width: 200px;
+    width: 100%;
     font-size: 0.85rem;
-    padding: 0 6vw;
   }
 
   .self {
     position: static;
-    width: 40%;
-    align-self: flex-end;
-    margin-left: auto;
+    float: right;
+    width: 60%;
+    margin: 0 0 1rem 1.5rem;
   }
 
   /* VEDA mobile ---------------------------------------------*/
