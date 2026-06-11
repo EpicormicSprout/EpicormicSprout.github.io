@@ -676,8 +676,8 @@ section {
     transform: none;
     right: auto;
     top: auto;
-    opacity: 0.5;
-    font-size: 0.55rem;
+    opacity: 0.7;
+    font-size: 0.7rem;
   }
 
   .dot:hover::before {
