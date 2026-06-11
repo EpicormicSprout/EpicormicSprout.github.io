@@ -480,14 +480,15 @@ section {
   #welcome {
     display: flex;
     flex-direction: column;
-    padding-top: 8vw;
-    padding-bottom: 10vw;
+    padding: 0;
   }
 
   .landing {
     position: static;
     width: 100%;
-    padding: 6vw 0 0 6vw;
+    min-height: 100vh;
+    object-fit: contain;
+    padding: 0;
   }
 
   .welcome-bottom {
