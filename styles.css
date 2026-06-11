@@ -495,11 +495,13 @@ section {
     align-items: flex-end;
     gap: 4vw;
     padding: 6vw 0 0 6vw;
+    flex-wrap: wrap;
   }
 
   .bio {
     position: static;
     width: 60%;
+    min-width: 200px;
     font-size: 0.85rem;
     padding: 0 6vw;
   }
