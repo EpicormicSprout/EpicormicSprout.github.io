@@ -65,7 +65,7 @@
       <div class="order-slip">
         <img class="cs-stamp" src="img/CS.png" alt="CS" />
         <p class="order-option">□ <a href="#" onclick="openModal(); return false;">Dine in</a></p>
-        <p class="order-option">□ <a href="https://yourdashboard.com" target="_blank">Take out</a></p>
+        <p class="order-option">□ <a href="#" onclick="openTakeout(); return false;">Take out</a></p>
       </div>
       <p class="copyright">© 2026 C.S. Rowe: all art in situ in Merced & Mariposa, California</p>
     </section>
@@ -111,7 +111,7 @@
       }
 
       document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Escape') { closeModal(); closeTakeout(); }
       });
 
       async function searchLexicon(query) {
@@ -143,6 +143,56 @@
             ${entry.source ? `<p class="entry-source">— ${entry.source}</p>` : ''}
           </div>
         `).join('<hr class="entry-divider" />');
+      }
+    </script>
+
+    <div id="takeout-modal" style="display:none;">
+      <div class="modal-backdrop" onclick="closeTakeout()"></div>
+      <div class="modal-menu">
+        <img class="menu-bg" src="img/Chop_Suey.png" alt="Chop Suey Menu" />
+        <div class="menu-content">
+          <input class="menu-search" type="password" placeholder="enter your password" onkeydown="handlePassword(event)" id="password-input" />
+          <p class="menu-response" id="password-response"></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openTakeout() {
+        document.getElementById('takeout-modal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('password-input').focus(), 100);
+      }
+      function closeTakeout() {
+        document.getElementById('takeout-modal').style.display = 'none';
+        document.body.style.overflow = '';
+        document.getElementById('password-input').value = '';
+        document.getElementById('password-response').textContent = '';
+      }
+      async function handlePassword(e) {
+        if (e.key !== 'Enter') return;
+        const val = document.getElementById('password-input').value;
+        const response = document.getElementById('password-response');
+        response.textContent = '...';
+        try {
+          const res = await fetch('https://gvfcygdfjimmsrjakodo.supabase.co/functions/v1/verify-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: val })
+          });
+          const data = await res.json();
+          if (data.success) {
+            response.textContent = 'access granted.';
+            sessionStorage.setItem('dashboard_token', 'true');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+          } else {
+            response.textContent = 'access denied.';
+            setTimeout(() => { document.getElementById('password-input').value = ''; response.textContent = ''; }, 1500);
+          }
+        } catch (err) {
+          response.textContent = 'connection error.';
+          setTimeout(() => { document.getElementById('password-input').value = ''; response.textContent = ''; }, 1500);
+        }
       }
     </script>
 
