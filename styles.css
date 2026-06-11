@@ -507,6 +507,7 @@ section {
     float: right;
     width: 60%;
     margin: 0 0 1rem 1.5rem;
+    shape-outside: url(img/self.png);
   }
 
   /* VEDA mobile ---------------------------------------------*/
