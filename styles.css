@@ -1,0 +1,704 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --cream: #f4efe5;
+  --dark: #0a0a0a;
+  --text: #1a1a1a;
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Merriweather', serif;
+  overflow-x: hidden;
+}
+
+section {
+  width: 100vw;
+  height: 100vh;
+}
+
+#welcome  { 
+  background: var(--cream);
+  position: relative;
+}
+
+#veda     { background: var(--cream); }
+#dan      { background: var(--cream); }
+#cv       { background: var(--cream); }
+#lexicon  { background: var(--dark); }
+
+/* WELCOME ====================================================*/
+.landing {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 50%;
+}
+
+.bio {
+  position: absolute;
+  top: 25%;
+  left: 52%;
+  width: 28%;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.9rem;
+  line-height: 1.85;
+}
+
+.bio a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.bio a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.self {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 22%;
+}
+
+/* VEDA ================================================*/
+#veda {
+  position: relative;
+  padding: 5% 8%;
+  overflow: hidden;
+}
+
+.veda-hero {
+  display: flow-root;
+  position: relative;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.veda-left {
+  box-sizing: border-box;
+  float: left;
+  width: 50%;
+  text-align: justify;
+  padding-right: 1em;
+  font-family: 'Merriweather', serif;
+  font-size: 0.75rem;
+  line-height: 1.95;
+}
+
+.veda-right {
+  box-sizing: border-box;
+  float: right;
+  width: 50%;
+  padding-left: 1em;
+  text-align: justify;
+  font-family: 'Merriweather', serif;
+  font-size: 0.75rem;
+  line-height: 1.95;
+}
+
+.veda-left::before {
+  content: "";
+  width: 46%;
+  aspect-ratio: 1 / 2.2;
+  shape-outside: polygon(0% 40%, 100% 40%, 100% 100%, 0% 100%);
+  float: right;
+}
+
+.veda-right::before {
+  content: "";
+  width: 46%;
+  aspect-ratio: 1 / 2.2;
+  shape-outside: polygon(0% 40%, 100% 40%, 100% 100%, 0% 100%);
+  float: left;
+}
+
+.veda-img {
+  position: absolute;
+  width: 45%;
+  left: 50%;
+  margin-top: 15%;
+  transform: translateX(-50%);
+  z-index: 10;
+  opacity: 0.89;
+}
+
+.veda-left p, .veda-right p {
+  text-indent: 2em;
+  margin-bottom: 0;
+}
+
+.veda-left p:first-of-type {
+  text-indent: 0;
+}
+
+/* DAN ===================================================*/
+#dan {
+  position: relative;
+}
+
+.dan-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: auto;
+}
+
+.dan-text {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45%;
+  font-family: 'Merriweather', serif;
+  font-size: 0.75rem;
+  line-height: 1.95;
+  padding: 0 8%;
+}
+
+.dan-text p {
+  margin-bottom: 1.5em;
+}
+
+
+/* CV =================================================================*/
+#cv {
+  position: relative;
+}
+
+.cv-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 15%;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.85rem;
+  line-height: 2.2;
+}
+
+.cv-label {
+  margin-bottom: 0.5em;
+}
+
+.cv-text a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.cv-text a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cv-download {
+  display: inline-block;
+  margin-top: 1em;
+  letter-spacing: 0.1em;
+}
+
+.cv-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 80%;
+  width: auto;
+}
+
+
+
+/* LEXICON =====================================================*/
+#lexicon {
+  position: relative;
+  background: var(--cream);
+}
+
+.chopsuey-img {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  height: 80%;
+  width: auto;
+}
+
+.order-slip {
+  position: absolute;
+  top: 65%;
+  transform: translateY(-50%);
+  right: 20%;
+  text-align: center;
+}
+
+.cs-stamp {
+  width: 50%;
+  display: block;
+  margin: 0 auto 0rem auto;
+  opacity: 80%;
+}
+
+.order-option {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.85rem;
+  margin: 0.1rem 0;
+}
+
+.order-option a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.order-option a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* DOT NAV ===================================================== */
+.dot-nav {
+  position: fixed;
+  right: 2%;
+  top: 4%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text);
+  opacity: 0.3;
+  position: relative;
+  transition: opacity 0.2s;
+}
+
+.dot:hover {
+  opacity: 1;
+}
+
+.dot::before {
+  content: attr(data-label);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Special Elite', cursive;
+  font-size: 0.7rem;
+  color: var(--text);
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.dot:hover::before {
+  opacity: 1;
+}
+
+/* MODAL ============================================================*/
+#chop-suey-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(10,10,10,0.5);
+}
+
+.modal-menu {
+  position: relative;
+  z-index: 1;
+  width: min(500px, 90vw);
+}
+
+.menu-bg {
+  width: 100%;
+  display: block;
+}
+
+.menu-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.menu-search {
+  position: absolute;
+  top: 25%;
+  left: 23%;
+  right: 15%;
+  width: 70%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  font-family: 'Special Elite', cursive;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+  outline: none;
+  color: white;
+}
+
+.menu-search::placeholder {
+  opacity: 0.6;
+  color: white;
+}
+
+.menu-results {
+  position: absolute;
+  top: 35%;
+  left: 8%;
+  right: 8%;
+  bottom: 12%;
+  overflow-y: auto;
+}
+
+.menu-results::-webkit-scrollbar {
+  width: 4px;
+}
+
+.menu-results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.menu-results::-webkit-scrollbar-thumb {
+  background: rgba(26,26,26,0.3);
+}
+
+.menu-results::-webkit-scrollbar-thumb:hover {
+  background: rgba(26,26,26,0.6);
+}
+
+.menu-entry {
+  padding: 0.8rem 0;
+}
+
+.entry-term {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.85rem;
+  margin: 0 0 0.2rem;
+}
+
+.entry-etymology {
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+  font-size: 0.65rem;
+  opacity: 0.5;
+  margin: 0 0 0.3rem;
+}
+
+.entry-def {
+  font-family: 'Merriweather', serif;
+  font-size: 0.72rem;
+  line-height: 1.8;
+  margin: 0 0 0.3rem;
+}
+
+.entry-notes {
+  font-family: 'Merriweather', serif;
+  font-size: 0.68rem;
+  font-style: italic;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.entry-source {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.65rem;
+  opacity: 0.5;
+  margin: 0.2rem 0 0;
+}
+
+.entry-divider {
+  border: none;
+  border-top: 1px solid rgba(26,26,26,0.15);
+  margin: 0;
+}
+
+.no-results {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin: 1rem 0;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 1rem;
+  left: 19%;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.6rem;
+  opacity: 0.3;
+}
+
+/* TAKEOUT MODAL */
+#takeout-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-response {
+  position: absolute;
+  top: 35%;
+  left: 8%;
+  right: 8%;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.85rem;
+  color: white;
+  text-align: center;
+  opacity: 0.8;
+}
+
+ /* MOBILE ============================================================*/
+@media (max-width: 768px) {
+
+  section {
+    height: auto;
+    min-height: 0;
+  }
+
+  /* WELCOME ------------------------------------------------*/
+  #welcome {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8vw;
+    padding-bottom: 10vw;
+  }
+
+  .landing {
+    position: static;
+    width: 100%;
+    padding: 6vw;
+  }
+
+  .welcome-bottom {
+    display: flex;
+    align-items: flex-end;
+    gap: 4vw;
+    padding: 6vw 0 0 6vw;
+  }
+
+  .bio {
+    position: static;
+    width: 60%;
+    font-size: 0.85rem;
+    padding: 0 6vw;
+  }
+
+  .self {
+    position: static;
+    width: 40%;
+    align-self: flex-end;
+    margin-left: auto;
+  }
+
+  /* VEDA mobile ---------------------------------------------*/
+  #veda {
+    padding: 8vw 6vw;
+  }
+
+  .veda-hero {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .veda-img {
+    order: -1;
+    position: static;
+    width: 100%;
+    margin: 0;
+    transform: none;
+    opacity: 1;
+  }
+
+  .veda-left {
+    order: 0;
+    float: none;
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .veda-right {
+    order: 1;
+    float: none;
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .veda-left::before,
+  .veda-right::before {
+    display: none;
+  }
+
+  /* DAN ----------------------------------------------*/
+  #dan {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dan-img {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .dan-text {
+    position: static;
+    width: 100%;
+    transform: none;
+    padding: 6vw;
+  }
+
+  /* CV ------------------------------------------------ */
+  #cv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cv-img {
+    position: static;
+    width: 100%;
+    height: auto;
+    order: -1;
+  }
+
+  .cv-text {
+    position: static;
+    transform: none;
+    padding: 6vw;
+  }
+
+  .cv-text::after {
+    content: "";
+    display: block;
+    width: 100%;
+    margin-top: 6vw;
+    border-top: 1px solid rgba(26,26,26,0.1);
+  }
+
+  /* LEXICON ---------------------------------------------------*/
+  #lexicon {
+   position: relative;
+   display: flex;
+   flex-direction: row;
+   align-items: flex-end;
+   justify-content: flex-start;
+   padding: 0;
+   gap: 0;
+   min-height: 40vw;
+ }
+
+  .chopsuey-img {
+    position: static;
+    width: 55%;
+    height: auto;
+    flex-shrink: 0;
+    align-self: flex-end;
+  }
+
+  .order-slip {
+    position: static;
+    transform: none;
+    text-align: center;
+    flex: 1;
+    padding: 4vw 0;
+    margin-left: -10vw;
+  }
+
+  .copyright {
+   position: absolute;
+   bottom: 1vw;
+   left: 0;
+   right: 0;
+   writing-mode: horizontal-tb;
+   transform: none;
+   font-size: 0.5rem;
+   opacity: 0.3;
+   text-align: center;
+ }
+
+  /* DIVIDERS ---------------------------------------------- */
+  #veda::before,
+  #dan::before {
+    content: "";
+    display: block;
+    width: calc(100% - 12vw);
+    margin: 0 6vw;
+    border-top: 1px solid rgba(26,26,26,0.1);
+  }
+
+  /* DOT NAV --------------------------------------*/
+  .dot-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+    background: var(--cream);
+    padding: 0.8rem 0;
+    opacity: 1;
+  }
+
+  .dot {
+    width: 0;
+    height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    background: transparent;
+  }
+
+  .dot::before {
+    position: static;
+    transform: none;
+    right: auto;
+    top: auto;
+    opacity: 0.5;
+    font-size: 0.55rem;
+  }
+
+  .dot:hover::before {
+    opacity: 1;
+  }
+
+  /* MODAL ----------------------------------------------*/
+  .modal-menu {
+   width: auto;
+   height: 95vh;
+   max-height: 95vh;
+  }
+
+  .menu-bg {
+   width: auto;
+   height: 100%;
+   object-fit: contain;
+  }
+  
+  .menu-results {
+  max-height: 45vh;
+  }
+}
