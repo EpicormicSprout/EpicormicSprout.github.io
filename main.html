@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C.S. Rowe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body { animation: fadeInPage 1s ease forwards; }
+      @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+  </head>
+  <body>
+
+    <section id="welcome">
+      <img class="landing" src="img/landing.png" alt="Merced hills" />
+      <div class="welcome-bottom">
+        <p class="bio">
+          <a href="#cv">Cognitive and Information Science Ph.D. student</a> asking: what happens when you open AI's black box and let it out into the world? Working from non-dual foundations of <a href="#lexicon">consciousness</a> studies and the belief that intelligence is about the world and grown through being in it: I create <a href="#veda">virtual embodied dynamic associations</a> by combining astrocyte analogues with <a href="#dan">dynamic associative networks</a>.
+        </p>
+        <img class="self" src="img/self.png" alt="" />
+      </div>
+    </section>
+
+    <section id="veda">
+      <div class="veda-hero">
+        <div class="veda-left">
+          <p>The current AI paradigm's methods of functioning are so inefficient that continuously updating and coupling it to the world pollutes the planet and siphons water supplies from at-risk rural communities, something the Central Valley knows the implications of all too well. Additionally, such continuous updating overwrites what was previously learned, as its optimization methods lack an efficient way to structurally integrate new knowledge.</p>
+          <p>VEDA, Virtual Embodied Dynamic Associations, offer a principled alternative that avoids these limitations from the ground up. Many open questions remain, but the research direction is clear: with an eye on efficiency, take DANs as the neuron core and augment them with astrocyte analogues to gain a dynamical oscillating system that is able to learn continuously, growing new network topologies by interacting with the world it exists in. Patterns that are adaptive are kept and the rest pruned. And, with the addition of astrocyte analogues, gradients build up over time to reach a threshold triggering a sleep cycle where memories are consolidated. Here, abstraction extracts reuseable core patterns of the world.</p>
+        </div>
+        <img class="veda-img" src="img/VEDA.png" alt="VEDA" />
+        <div class="veda-right">
+          <p>This focus on efficiency and neuromorphic inspiration is driven by the realization that, if intelligence depends on our world, then a liveable world is primary. And, as a result, efficiency is mandatory.</p>
+          <p>We know of nothing more efficiently intelligent than our own brains. So they remain the gold standard of what AI must emulate. While our understanding of the brain is immense, we still have significant gaps in our knowledge. Virtual worlds offer a solution without the experimental limitations of human availability and imaging capabilities. We can look inside the mind of VEDA and see what connections were built when. We can replay the entire learning process to fully understand what shaped the topology that leads to emergent mind. This offers a new level of understanding that we cannot achieve through looking at already formed brains alone.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="dan">
+      <img class="dan-img" src="img/DAN.png" alt="DANs" />
+      <div class="dan-text">
+        <p>DANs, Dynamic Associative Networks, enact the embodied coupling between agent and world. Through this they are able to ground semantics in syntax, meaning in form, as they grow a network topology from patterns of coactivations between neurons, Hebb's Law. What is meaningful is what is useful for navigation of the world. And the world is reflected in the forms that grow, offering an intuitive argument for language as a compression of the world and why LLMs were capable of more than just language manipulation.</p>
+        <p>They are the core of VEDA.</p>
+      </div>
+    </section>
+
+    <section id="cv">
+      <div class="cv-text">
+        <p class="cv-label">Intellectual lineage:</p>
+        <p><a href="https://jeffyoshimi.net" target="_blank">Jeff Yoshimi</a> | Ph.D. advisor</p>
+        <p><a href="https://cogsci.ucmerced.edu/content/christopher-kello" target="_blank">Christopher Kello</a> | Ph.D. advisor</p>
+        <p><a href="https://www.afbeavers.net/drg/members" target="_blank">Tony Beavers</a> | DAN creator, research mentor</p>
+        <p><a href="https://philpeople.org/profiles/jonathan-shear" target="_blank">Jonathan Shear</a> | Lodestar</p>
+        <br />
+        <p>VCU &nbsp; B.A. Philosophy</p>
+        <p>CPH &nbsp; B.S. Computer Science</p>
+        <p>UCM &nbsp; Ph.D. student Cognitive & Info Science</p>
+        <br />
+        <a class="cv-download" href="img/CV2026.pdf" download>Curriculum Vitae</a>
+      </div>
+      <img class="cv-img" src="img/CV.png" alt="" />
+    </section>
+
+    <section id="lexicon">
+      <img class="chopsuey-img" src="img/chopsuey.png" alt="Rice Bowl Chop Suey" />
+      <div class="order-slip">
+        <img class="cs-stamp" src="img/CS.png" alt="CS" />
+        <p class="order-option">□ <a href="#" onclick="openModal(); return false;">Dine in</a></p>
+        <p class="order-option">□ <a href="#" onclick="openTakeout(); return false;">Take out</a></p>
+      </div>
+      <p class="copyright">© 2026 C.S. Rowe: all art in situ in Merced & Mariposa, California</p>
+    </section>
+
+    <nav class="dot-nav">
+      <a href="#welcome" class="dot" data-label="Welcome"></a>
+      <a href="#veda" class="dot" data-label="VEDA"></a>
+      <a href="#dan" class="dot" data-label="DAN"></a>
+      <a href="#cv" class="dot" data-label="Lineage"></a>
+      <a href="#lexicon" class="dot" data-label="Lexicon"></a>
+    </nav>
+
+    <div id="chop-suey-modal" style="display:none;">
+      <div class="modal-backdrop" onclick="closeModal()"></div>
+      <div class="modal-menu">
+        <img class="menu-bg" src="img/Chop_Suey.png" alt="Chop Suey Menu" />
+        <div class="menu-content">
+          <input
+            class="menu-search"
+            type="text"
+            placeholder="enter a word"
+            oninput="searchLexicon(this.value)"
+          />
+          <div class="menu-results" id="menu-results"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const SUPABASE_URL = 'https://gvfcygdfjimmsrjakodo.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
+
+      function openModal() {
+        document.getElementById('chop-suey-modal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        document.getElementById('chop-suey-modal').style.display = 'none';
+        document.body.style.overflow = '';
+        document.getElementById('menu-results').innerHTML = '';
+        document.querySelector('.menu-search').value = '';
+      }
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      async function searchLexicon(query) {
+        const results = document.getElementById('menu-results');
+        if (!query || query.length < 2) {
+          results.innerHTML = '';
+          return;
+        }
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/terms?or=(term.ilike.*${query}*,definition.ilike.*${query}*)&select=term,definition,etymology,notes,source`,
+          {
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+        const data = await res.json();
+        if (data.length === 0) {
+          results.innerHTML = '<p class="no-results">No results.</p>';
+          return;
+        }
+        results.innerHTML = data.map(entry => `
+          <div class="menu-entry">
+            <p class="entry-term">${entry.term}</p>
+            ${entry.etymology ? `<p class="entry-etymology">${entry.etymology}</p>` : ''}
+            <p class="entry-def">${entry.definition}</p>
+            ${entry.notes ? `<p class="entry-notes">${entry.notes}</p>` : ''}
+            ${entry.source ? `<p class="entry-source">— ${entry.source}</p>` : ''}
+          </div>
+        `).join('<hr class="entry-divider" />');
+      }
+    </script>
+
+  <!-- TAKE OUT MODAL -->
+  <div id="takeout-modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeTakeout()"></div>
+    <div class="modal-menu">
+      <img class="menu-bg" src="img/Chop_Suey.png" alt="Chop Suey Menu" />
+      <div class="menu-content">
+        <input
+          class="menu-search"
+          type="password"
+          placeholder="enter your password"
+          onkeydown="handlePassword(event)"
+          id="password-input"
+        />
+        <p class="menu-response" id="password-response"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openTakeout() {
+      document.getElementById('takeout-modal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('password-input').focus(), 100);
+    }
+
+    function closeTakeout() {
+      document.getElementById('takeout-modal').style.display = 'none';
+      document.body.style.overflow = '';
+      document.getElementById('password-input').value = '';
+      document.getElementById('password-response').textContent = '';
+    }
+
+    async function handlePassword(e) {
+      if (e.key !== 'Enter') return;
+      const val = document.getElementById('password-input').value;
+      const response = document.getElementById('password-response');
+      response.textContent = '...';
+
+      try {
+        const res = await fetch('https://gvfcygdfjimmsrjakodo.supabase.co/functions/v1/verify-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: val })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          response.textContent = 'access granted.';
+          sessionStorage.setItem('dashboard_token', 'true');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        } else {
+          response.textContent = 'access denied.';
+          setTimeout(() => {
+            document.getElementById('password-input').value = '';
+            response.textContent = '';
+          }, 1500);
+        }
+      } catch (err) {
+        response.textContent = 'connection error.';
+        setTimeout(() => {
+          document.getElementById('password-input').value = '';
+          response.textContent = '';
+        }, 1500);
+      }
+    }
+  </script>
+
+  </body>
+</html>
