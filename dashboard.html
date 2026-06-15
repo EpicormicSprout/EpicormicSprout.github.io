@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>the workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --cream:#f4efe5; --paper:#faf7f0; --text:#1a1a1a;
+  --dim:rgba(26,26,26,.52); --faint:rgba(26,26,26,.30); --hair:rgba(26,26,26,.13);
+  --sage:#4a6b54;
+  --type:'Special Elite',cursive; --body:'Merriweather',serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+html.dark{
+  --cream:#0a0a0a; --paper:#101010; --text:#e7e1d4;
+  --dim:rgba(231,225,212,.50); --faint:rgba(231,225,212,.26); --hair:rgba(231,225,212,.12);
+  --sage:#88b095;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--cream); color:var(--text);
+  font-family:var(--body); font-weight:300; line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  transition:background .5s var(--ease), color .5s var(--ease);
+  height:100vh; overflow:hidden;
+  display:flex; justify-content:center;
+  padding:clamp(22px,5vh,52px) 24px 18px;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:radial-gradient(140% 90% at 50% -20%, color-mix(in srgb,var(--sage) 7%,transparent), transparent 55%);
+  opacity:.8;
+}
+.wrap{position:relative; z-index:1; width:100%; max-width:1080px; display:flex; flex-direction:column}
+
+#light{
+  position:fixed; top:20px; right:22px; z-index:10;
+  border:1px solid var(--hair); background:transparent; color:var(--dim);
+  width:36px; height:36px; border-radius:50%; cursor:pointer;
+  font-size:.85rem; display:grid; place-items:center; transition:.3s var(--ease);
+}
+#light:hover{color:var(--text); border-color:var(--faint)}
+
+/* masthead */
+.title{font-family:var(--type); font-size:1.65rem; line-height:1.3; letter-spacing:.02em}
+.sky{font-family:var(--body); font-style:italic; font-size:.8rem; color:var(--dim); margin-top:8px; display:flex; align-items:center; gap:9px}
+.sky .moon{font-style:normal; font-size:.95rem}
+
+/* tabs */
+.tabs{display:flex; flex-wrap:wrap; gap:22px; margin:22px 0 16px; padding-bottom:16px; border-bottom:1px solid var(--hair)}
+.tab{
+  font-family:var(--type); font-size:.92rem; letter-spacing:.02em; color:var(--faint);
+  background:none; border:none; cursor:pointer; padding:2px 0; transition:color .3s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.tab:hover{color:var(--text)}
+.tab.on{color:var(--text); border-bottom-color:var(--sage)}
+
+/* workspace tiles */
+.workspace{flex:1; min-height:0; display:flex; gap:20px}
+.panel{
+  flex:1 1 0; min-width:0; display:none; flex-direction:column;
+  background:var(--paper); border:1px solid var(--hair); border-radius:13px;
+  opacity:0; transition:opacity .3s var(--ease);
+}
+.panel.vis{opacity:1}
+.p-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:13px 18px; border-bottom:1px solid var(--hair); flex-shrink:0;
+}
+.p-head .p-name{font-family:var(--type); font-size:.78rem; letter-spacing:.06em}
+.p-close{font-family:var(--type); font-size:.95rem; color:var(--faint); background:none; border:none; cursor:pointer; line-height:1; transition:color .3s}
+.p-close:hover{color:var(--text)}
+.p-body{flex:1; overflow-y:auto; padding:20px 20px}
+.p-body::-webkit-scrollbar{width:7px}
+.p-body::-webkit-scrollbar-thumb{background:var(--hair); border-radius:7px}
+
+/* shared content */
+.task{display:flex; align-items:flex-start; gap:11px; padding:7px 0; cursor:pointer; font-size:.88rem; line-height:1.6; color:var(--text); transition:color .3s}
+.task .mark{font-family:var(--type); font-size:.95rem; color:var(--dim); flex-shrink:0}
+.task.done{color:var(--faint)}
+.task.done .mark{color:var(--sage)}
+.field{
+  width:100%; font-family:var(--body); font-size:.84rem; color:var(--text);
+  background:transparent; border:none; border-bottom:1px solid var(--hair);
+  padding:7px 2px; outline:none; transition:border-color .3s;
+}
+.field::placeholder{color:var(--faint); font-style:italic}
+.field:focus{border-bottom-color:var(--sage)}
+textarea.field{resize:vertical; min-height:60px; border:1px solid var(--hair); border-radius:5px; padding:8px; margin-top:6px}
+textarea.field:focus{border-color:var(--sage)}
+.list{margin-top:12px}
+.entry{padding:8px 0; border-bottom:1px solid var(--hair)}
+.entry:last-child{border-bottom:none}
+.entry .t{font-family:var(--body); font-size:.86rem; line-height:1.5}
+.entry .m{font-family:var(--type); font-size:.58rem; color:var(--faint); margin-top:3px; letter-spacing:.04em}
+.entry .link{font-family:var(--type); font-size:.58rem; letter-spacing:.06em; color:var(--sage); text-decoration:none; display:inline-block; margin-top:3px}
+.entry .link:hover{text-decoration:underline; text-underline-offset:3px}
+.term{font-family:var(--type); font-size:.9rem; color:var(--sage)}
+.def{font-family:var(--body); font-style:italic; font-size:.78rem; color:var(--dim); line-height:1.7; margin-top:3px}
+.etym{font-family:var(--body); font-style:italic; font-size:.68rem; color:var(--faint); margin-top:1px}
+.source{font-family:var(--type); font-size:.6rem; color:var(--faint); margin-top:3px}
+.notes-field{font-family:var(--body); font-style:italic; font-size:.74rem; color:var(--faint); margin-top:2px}
+.btn{
+  font-family:var(--type); font-size:.72rem; letter-spacing:.04em; color:var(--dim);
+  background:none; border:1px solid var(--hair); border-radius:5px;
+  cursor:pointer; padding:5px 10px; transition:.3s;
+}
+.btn:hover{color:var(--text); border-color:var(--faint)}
+.add-form{display:none; flex-direction:column; gap:6px; margin-top:14px; padding-top:14px; border-top:1px solid var(--hair)}
+.add-form.open{display:flex}
+.status{font-family:var(--type); font-size:.6rem; color:var(--sage); margin-left:8px}
+.empty{font-family:var(--type); font-size:.72rem; color:var(--faint); margin-top:12px}
+
+/* hazel */
+.hz-log{display:flex; flex-direction:column; gap:12px; margin-bottom:14px}
+.hz-msg{font-size:.86rem; line-height:1.7; max-width:92%}
+.hz-msg.a{font-style:italic; color:var(--dim)}
+.hz-msg.u{color:var(--text); padding-left:14px; border-left:1px solid var(--sage)}
+.hz-msg.thinking{font-style:italic; color:var(--faint)}
+.hz-row{display:flex; align-items:center; gap:10px}
+.hz-row .field{flex:1}
+.hz-row button{font-family:var(--type); font-size:.7rem; color:var(--dim); background:none; border:none; cursor:pointer; padding:6px 4px; transition:color .3s}
+.hz-row button:hover{color:var(--text)}
+
+.foot{flex-shrink:0; margin-top:14px; font-family:var(--type); font-size:.55rem; color:var(--faint); letter-spacing:.06em; text-align:center}
+
+@media(max-width:768px){
+  body{height:auto; min-height:100vh; overflow:auto}
+  .wrap{max-width:100%}
+  .workspace{flex-direction:column}
+  .panel{min-height:60vh}
+}
+</style>
+</head>
+<body>
+<button id="light" title="light / dark">☾</button>
+
+<div class="wrap">
+  <header>
+    <div class="title">The Workshop</div>
+    <div class="sky"><span class="moon" id="w-moon">·</span><span id="w-sky">loading…</span></div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab" data-tab="today">Today</button>
+    <button class="tab" data-tab="hazel">Hazel</button>
+    <button class="tab" data-tab="notes">Notes</button>
+    <button class="tab" data-tab="papers">Papers</button>
+    <button class="tab" data-tab="lexicon">Lexicon</button>
+  </nav>
+
+  <main class="workspace" id="workspace">
+
+    <section class="panel" data-panel="today">
+      <div class="p-head"><span class="p-name">Today</span><button class="p-close" onclick="closePanel('today')">✕</button></div>
+      <div class="p-body">
+        <div id="task-list"></div>
+        <input class="field" id="task-input" style="margin-top:14px" placeholder="add a task…" onkeydown="addTask(event)">
+      </div>
+    </section>
+
+    <section class="panel" data-panel="hazel">
+      <div class="p-head"><span class="p-name">Hazel</span><button class="p-close" onclick="closePanel('hazel')">✕</button></div>
+      <div class="p-body">
+        <div class="hz-log" id="hz-log"></div>
+        <div class="hz-row">
+          <input class="field" id="hz-input" placeholder="say something…" onkeydown="if(event.key==='Enter')sendHazel()">
+          <button onclick="sendHazel()">send</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="notes">
+      <div class="p-head">
+        <span class="p-name">Notes</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button class="btn" onclick="toggleNewNote()">+ new</button>
+          <button class="p-close" onclick="closePanel('notes')">✕</button>
+        </div>
+      </div>
+      <div class="p-body">
+        <input class="field" id="note-search" placeholder="search the vault…" oninput="searchNotes(this.value)">
+        <div class="add-form" id="new-note-form">
+          <input class="field" id="nn-title" placeholder="title…">
+          <textarea class="field" id="nn-body" placeholder="content…"></textarea>
+          <div><button class="btn" onclick="saveNewNote()">save</button></div>
+        </div>
+        <div class="list" id="note-results"></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="papers">
+      <div class="p-head"><span class="p-name">Papers</span><button class="p-close" onclick="closePanel('papers')">✕</button></div>
+      <div class="p-body">
+        <input class="field" id="paper-search" placeholder="search papers…" oninput="searchPapers(this.value)">
+        <div class="list" id="paper-results"></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="lexicon">
+      <div class="p-head">
+        <span class="p-name">Lexicon</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button class="btn" onclick="toggleAddLex()">+ add</button>
+          <button class="p-close" onclick="closePanel('lexicon')">✕</button>
+        </div>
+      </div>
+      <div class="p-body">
+        <input class="field" id="lex-search" placeholder="enter a word…" oninput="searchLex(this.value)">
+        <div class="add-form" id="add-lex">
+          <input class="field" id="lex-term-input" placeholder="term…">
+          <input class="field" id="lex-etym-input" placeholder="etymology…">
+          <textarea class="field" id="lex-def-input" placeholder="definition…"></textarea>
+          <div style="display:flex;align-items:center"><button class="btn" onclick="addLex()">add</button><span class="status" id="lex-status"></span></div>
+        </div>
+        <div class="list" id="lex-results"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <p class="foot">the workshop · in situ, Merced & Mariposa</p>
+</div>
+
+<script>
+/* ── AUTH ── */
+const token = sessionStorage.getItem('dashboard_token') || sessionStorage.getItem('auth_token') || sessionStorage.getItem('token');
+if (!token) window.location.href = 'index.html';
+
+/* ── SUPABASE ── */
+const SUPABASE_URL = 'https://gvfcygdfjimmsrjakodo.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ── LIGHT / DARK ── */
+const root = document.documentElement, lb = document.getElementById('light');
+function setMode(d){ root.classList.toggle('dark',d); lb.textContent=d?'☀':'☾'; }
+let pref=null; try{ pref=localStorage.getItem('workshop-mode'); }catch(e){}
+if(pref) setMode(pref==='dark');
+else setMode(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+lb.onclick=()=>{ const d=!root.classList.contains('dark'); setMode(d); try{localStorage.setItem('workshop-mode',d?'dark':'light');}catch(e){} };
+
+/* ── WEATHER + MOON ── */
+function getMoon(){
+  const known=new Date(2000,0,6,18,14,0), syn=29.530588853;
+  const pct=(((new Date()-known)/(1000*60*60*24))%syn+syn)%syn/syn;
+  const p=[
+    {name:'new moon',emoji:'🌑',min:0,max:.0625},
+    {name:'waxing crescent',emoji:'🌒',min:.0625,max:.1875},
+    {name:'first quarter',emoji:'🌓',min:.1875,max:.3125},
+    {name:'waxing gibbous',emoji:'🌔',min:.3125,max:.4375},
+    {name:'full moon',emoji:'🌕',min:.4375,max:.5625},
+    {name:'waning gibbous',emoji:'🌖',min:.5625,max:.6875},
+    {name:'last quarter',emoji:'🌗',min:.6875,max:.8125},
+    {name:'waning crescent',emoji:'🌘',min:.8125,max:1}
+  ];
+  return p.find(x=>pct>=x.min&&pct<x.max)||p[0];
+}
+async function loadWeather(){
+  try{
+    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.8021&longitude=-124.1637&current=temperature_2m,weathercode,windspeed_10m,relative_humidity_2m&temperature_unit=fahrenheit&windspeed_unit=mph');
+    const d=await r.json(); const c=d.current;
+    const desc={0:'clear sky',1:'mainly clear',2:'partly cloudy',3:'overcast',45:'fog',51:'light drizzle',61:'light rain',63:'rain',65:'heavy rain',80:'showers',95:'thunderstorm'};
+    const moon=getMoon();
+    document.getElementById('w-moon').textContent=moon.emoji;
+    document.getElementById('w-sky').textContent=`${moon.name} · ${Math.round(c.temperature_2m)}°F, ${desc[c.weathercode]||'variable'} · wind ${Math.round(c.windspeed_10m)}mph`;
+  }catch(e){
+    const moon=getMoon();
+    document.getElementById('w-moon').textContent=moon.emoji;
+    document.getElementById('w-sky').textContent=moon.name;
+  }
+}
+loadWeather();
+
+/* ── TILING — one fills, two split, third bumps oldest ── */
+let openPanes=[];
+function render(){
+  document.querySelectorAll('.panel').forEach(p=>{
+    const n=p.dataset.panel, idx=openPanes.indexOf(n);
+    if(idx===-1){ p.classList.remove('vis'); p.style.display='none'; }
+    else{ p.style.display='flex'; p.style.order=idx; requestAnimationFrame(()=>p.classList.add('vis')); }
+  });
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on', openPanes.includes(t.dataset.tab)));
+}
+function openTab(name){
+  const i=openPanes.indexOf(name);
+  if(i!==-1) openPanes.splice(i,1);
+  else{ if(openPanes.length>=2) openPanes.shift(); openPanes.push(name); }
+  render();
+}
+function closePanel(name){ const i=openPanes.indexOf(name); if(i!==-1){ openPanes.splice(i,1); render(); } }
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>openTab(t.dataset.tab));
+
+/* ── TASKS (localStorage) ── */
+let tasks = JSON.parse(localStorage.getItem('tasks-v2')||'[]');
+function saveTasks(){ localStorage.setItem('tasks-v2',JSON.stringify(tasks)); renderTasks(); }
+function renderTasks(){
+  const el=document.getElementById('task-list'); if(!el) return;
+  if(!tasks.length){ el.innerHTML=''; return; }
+  el.innerHTML=tasks.map((t,i)=>`
+    <div class="task ${t.done?'done':''}" onclick="toggleTask(${i})" ondblclick="deleteTask(${i})">
+      <span class="mark">${t.done?'☒':'□'}</span>${t.text}
+    </div>`).join('');
+}
+function addTask(e){
+  if(e.key!=='Enter') return;
+  const v=e.target.value.trim(); if(!v) return;
+  tasks.unshift({text:v,done:false}); saveTasks(); e.target.value='';
+}
+function toggleTask(i){ tasks[i].done=!tasks[i].done; saveTasks(); }
+function deleteTask(i){ tasks.splice(i,1); saveTasks(); }
+renderTasks();
+
+/* ── HAZEL ── */
+let chatHistory=[];
+function appendHz(role, text){
+  const log=document.getElementById('hz-log');
+  const d=document.createElement('div');
+  d.className='hz-msg '+(role==='user'?'u':'a');
+  d.textContent=text;
+  log.appendChild(d);
+  log.scrollTop=log.scrollHeight;
+  chatHistory.push({role, content:text});
+}
+async function getCtx(q){
+  let ctx='';
+  const [{data:n},{data:p},{data:t}]=await Promise.all([
+    db.from('notes').select('title,content').ilike('title',`%${q}%`).limit(2),
+    db.from('papers').select('title,abstract').ilike('title',`%${q}%`).limit(2),
+    db.from('terms').select('term,definition').ilike('term',`%${q}%`).limit(2),
+  ]);
+  if(n?.length) ctx+=`\n\nNOTES:\n`+n.map(x=>`[${x.title}] ${x.content?.slice(0,300)}`).join('\n');
+  if(p?.length) ctx+=`\n\nPAPERS:\n`+p.map(x=>`[${x.title}] ${x.abstract?.slice(0,250)}`).join('\n');
+  if(t?.length) ctx+=`\n\nLEXICON:\n`+t.map(x=>`[${x.term}] ${x.definition}`).join('\n');
+  return ctx;
+}
+async function sendHazel(){
+  const inp=document.getElementById('hz-input');
+  const q=inp.value.trim(); if(!q) return;
+  inp.value=''; appendHz('user',q);
+  const log=document.getElementById('hz-log');
+  const th=document.createElement('div'); th.className='hz-msg thinking'; th.textContent='…';
+  log.appendChild(th); log.scrollTop=log.scrollHeight;
+  const ctx=await getCtx(q);
+  const system=`You are Hazel, research assistant for C. S. Rowe, incoming PhD in Cognitive and Information Sciences at UC Merced. DANs, astrocyte coupling, VEDA. Be terse and precise.${ctx?'\n\nContext:'+ctx:''}`;
+  try{
+    const res=await fetch(`${SUPABASE_URL}/functions/v1/hazel`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system, messages:chatHistory.filter(m=>m.role!=='system').slice(-10)})
+    });
+    const data=await res.json();
+    th.remove();
+    appendHz('assistant', data?.content?.[0]?.text||data?.error?.message||'no response');
+  }catch(e){ th.remove(); appendHz('assistant','connection error'); }
+}
+appendHz('assistant',"Hey, nerd. What's up?");
+
+/* ── NOTES ── */
+async function searchNotes(q){
+  const el=document.getElementById('note-results');
+  if(!q){ el.innerHTML=''; return; }
+  const {data}=await db.from('notes').select('title,path').ilike('title',`%${q}%`).limit(6);
+  el.innerHTML=(data||[]).map(n=>`
+    <div class="entry">
+      <div class="t">${n.title}</div>
+      <div class="m">${n.path||''}</div>
+    </div>`).join('')||'<div class="empty">none found</div>';
+}
+function toggleNewNote(){
+  document.getElementById('new-note-form').classList.toggle('open');
+}
+async function saveNewNote(){
+  const title=document.getElementById('nn-title').value.trim();
+  const content=document.getElementById('nn-body').value.trim();
+  if(!title) return;
+  await db.from('notes').insert({title, content, path:`Notes/${title}.md`, tags:[], updated_at:new Date().toISOString()});
+  document.getElementById('nn-title').value='';
+  document.getElementById('nn-body').value='';
+  document.getElementById('new-note-form').classList.remove('open');
+}
+
+/* ── PAPERS ── */
+async function searchPapers(q){
+  const el=document.getElementById('paper-results');
+  const qr=q
+    ? db.from('papers').select('*').or(`title.ilike.%${q}%,abstract.ilike.%${q}%`).limit(8)
+    : db.from('papers').select('*').order('year',{ascending:false}).limit(8);
+  const {data}=await qr;
+  el.innerHTML=(data||[]).map(p=>`
+    <div class="entry">
+      <div class="t">${p.title}</div>
+      <div class="m">${(p.authors||[]).join(', ')}${p.year?' · '+p.year:''}</div>
+      ${p.zotero_key?`<a class="link" href="reading_room.html?key=${p.zotero_key}">open in reading room →</a>`:''}
+    </div>`).join('');
+}
+searchPapers('');
+
+/* ── LEXICON ── */
+async function searchLex(q){
+  const el=document.getElementById('lex-results');
+  if(!q){ el.innerHTML=''; return; }
+  const [{data:tm},{data:dm}]=await Promise.all([
+    db.from('terms').select('term,definition,etymology,notes,source').ilike('term',`${q}%`).limit(5),
+    db.from('terms').select('term,definition,etymology,notes,source').ilike('definition',`%${q}%`).limit(5),
+  ]);
+  const seen=new Set((tm||[]).map(t=>t.term));
+  const merged=[...(tm||[]),...(dm||[]).filter(t=>!seen.has(t.term))].slice(0,8);
+  el.innerHTML=merged.map(t=>`
+    <div class="entry">
+      <div class="term">${t.term}</div>
+      ${t.etymology?`<div class="etym">${t.etymology}</div>`:''}
+      <div class="def">${t.definition}</div>
+      ${t.notes?`<div class="notes-field">${t.notes}</div>`:''}
+      ${t.source?`<div class="source">— ${t.source}</div>`:''}
+    </div>`).join('')||'<div class="empty">none found</div>';
+}
+function toggleAddLex(){
+  document.getElementById('add-lex').classList.toggle('open');
+}
+async function addLex(){
+  const term=document.getElementById('lex-term-input').value.trim();
+  const def=document.getElementById('lex-def-input').value.trim();
+  const etym=document.getElementById('lex-etym-input').value.trim();
+  const st=document.getElementById('lex-status');
+  if(!term||!def){ st.textContent='term + def required'; return; }
+  const {error}=await db.from('terms').insert({term, definition:def, etymology:etym||null, date_added:new Date().toISOString().split('T')[0]});
+  if(error){ st.textContent='error'; return; }
+  st.textContent='added ✓';
+  ['lex-term-input','lex-etym-input','lex-def-input'].forEach(id=>document.getElementById(id).value='');
+  setTimeout(()=>st.textContent='',2500);
+}
+</script>
+</body>
+</html>
