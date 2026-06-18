@@ -180,7 +180,7 @@ html, body {
 
   function build() {
     nodes=[]; edges=[]; pulses=[];
-    const count = Math.floor((W*H)/9000);
+    const count = Math.floor((W*H)/9000), 100;
     for (let i=0; i<count; i++) {
       const r=Math.random(), spread=0.6;
       const gx = W*0.5+(Math.random()-0.5)*W*(0.5+r*spread);
