@@ -333,16 +333,24 @@ body {
 
 .login-box {
   width: 100%;
-  max-width: 320px;
-  padding: 2.5rem;
+  max-width: 340px;
+  padding: 2.75rem 2.25rem;
   text-align: center;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(43, 43, 43, 0.18);
+  border-radius: 6px;
+  box-shadow: 0 4px 18px rgba(43, 43, 43, 0.08);
 }
 
 .login-title {
   font-family: 'Special Elite', cursive;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #2b2b2b;
+  padding-bottom: 1.2rem;
   margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(43, 43, 43, 0.15);
 }
 
 .login-input {
@@ -367,15 +375,17 @@ body {
 .login-submit {
   width: 100%;
   font-family: 'Special Elite', cursive;
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
-  padding: 0.65rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.7rem;
   border: 1px solid #2b2b2b;
   border-radius: 3px;
   background: transparent;
   color: #2b2b2b;
   cursor: pointer;
   margin-bottom: 1rem;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .login-submit:hover {
@@ -411,21 +421,26 @@ body {
 
 .site-footer {
   text-align: center;
-  padding: 2.5rem 1rem 3rem;
+  padding: 3rem 1rem 3rem;
+  margin: 0 1rem;
+  border-top: 1px solid rgba(43, 43, 43, 0.15);
 }
 
 .footer-links {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 0.75rem;
+  gap: 2.5rem;
+  margin-bottom: 1rem;
   font-family: 'Special Elite', cursive;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .footer-links a {
-  color: rgba(43, 43, 43, 0.55);
+  color: #6b4a2a;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .footer-links a:hover {
@@ -434,8 +449,10 @@ body {
 
 .footer-copyright {
   font-family: 'Merriweather', serif;
-  font-size: 0.72rem;
-  color: rgba(43, 43, 43, 0.4);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: rgba(43, 43, 43, 0.45);
 }
 
 /* ---------- mobile adjustments ---------- */
