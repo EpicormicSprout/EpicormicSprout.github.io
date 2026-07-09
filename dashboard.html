@@ -131,6 +131,8 @@ textarea.field:focus{border-color:var(--sage)}
 
 .foot{flex-shrink:0; margin-top:14px; font-family:var(--type); font-size:.55rem; color:var(--faint); letter-spacing:.06em; text-align:center}
 
+#dashboard-content{height:100%; display:flex; flex-direction:column}
+
 /* login gate */
 .login-gate{
   position:fixed; inset:0; z-index:50;
@@ -291,7 +293,7 @@ const gateSubmit = document.getElementById('gate-submit');
 
 function showDashboard() {
   loginGate.style.display = 'none';
-  dashboardContent.style.display = 'block';
+  dashboardContent.style.display = 'flex';
 }
 
 function showLoginGate() {
@@ -470,15 +472,25 @@ async function sendHazel(){
 appendHz('assistant',"Hey, nerd. What's up?");
 
 /* ── NOTES ── */
+let noteResultsCache = [];
 async function searchNotes(q){
   const el=document.getElementById('note-results');
-  if(!q){ el.innerHTML=''; return; }
-  const {data}=await db.from('notes').select('title,path').ilike('title',`%${q}%`).limit(6);
-  el.innerHTML=(data||[]).map(n=>`
+  if(!q){ el.innerHTML=''; noteResultsCache=[]; return; }
+  const {data}=await db.from('notes').select('title,path,content').ilike('title',`%${q}%`).limit(6);
+  noteResultsCache = data||[];
+  el.innerHTML=noteResultsCache.map((n,i)=>`
     <div class="entry">
-      <div class="t">${n.title}</div>
+      <div class="t" style="cursor:pointer" onclick="toggleNote(${i})">${n.title}</div>
       <div class="m">${n.path||''}</div>
+      <div class="note-content" id="note-content-${i}" style="display:none; white-space:pre-wrap; font-size:.82rem; line-height:1.75; margin-top:8px; color:var(--text)"></div>
     </div>`).join('')||'<div class="empty">none found</div>';
+}
+function toggleNote(i){
+  const el=document.getElementById('note-content-'+i);
+  if(!el) return;
+  const open = el.style.display==='block';
+  el.style.display = open ? 'none' : 'block';
+  if(!open) el.textContent = noteResultsCache[i]?.content || '(empty note)';
 }
 function toggleNewNote(){
   document.getElementById('new-note-form').classList.toggle('open');
