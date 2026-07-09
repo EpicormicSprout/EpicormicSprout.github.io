@@ -46,7 +46,7 @@ const navObserver = new IntersectionObserver((entries) => {
   });
 }, {
   threshold: 0,
-  rootMargin: '0px 0px -70% 0px' // trigger once hero is ~70% scrolled past, not fully gone
+  rootMargin: '0px 0px -40% 0px' // trigger once hero is ~40% scrolled past, not fully gone
 });
 
 navObserver.observe(hero);
