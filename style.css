@@ -123,7 +123,6 @@ body {
 /* ---------- lineage ---------- */
 
 .lineage-wrap {
-  position: relative;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -133,6 +132,11 @@ body {
   display: flex;
   align-items: center;
   scroll-margin-top: 4rem;
+}
+
+.lineage-image-wrap {
+  position: relative;
+  width: 100%;
 }
 
 .lineage-img {
@@ -339,6 +343,14 @@ body {
 
   .lineage-text {
     top: 12%;
+  }
+
+  .about-wrap,
+  .projects-wrap,
+  .lineage-wrap {
+    min-height: auto;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 }
 
