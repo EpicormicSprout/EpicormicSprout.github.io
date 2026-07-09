@@ -230,14 +230,24 @@ textarea.field:focus{border-color:var(--sage)}
 </div>
 
 <script>
-/* ── AUTH ── */
-const token = sessionStorage.getItem('dashboard_token') || sessionStorage.getItem('auth_token') || sessionStorage.getItem('token');
-if (!token) window.location.href = 'index.html';
-
 /* ── SUPABASE ── */
 const SUPABASE_URL = 'https://gvfcygdfjimmsrjakodo.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ── AUTH ── */
+(async () => {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) {
+    window.location.href = 'login.html';
+  }
+})();
+
+db.auth.onAuthStateChange((event) => {
+  if (event === 'SIGNED_OUT') {
+    window.location.href = 'login.html';
+  }
+});
 
 /* ── LIGHT / DARK ── */
 const root = document.documentElement, lb = document.getElementById('light');

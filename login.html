@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login &mdash; vedAI.live</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="login-page">
+
+  <div class="login-box">
+    <h1 class="login-title">login</h1>
+    <input type="email" id="login-email" class="login-input" placeholder="email" autocomplete="username">
+    <input type="password" id="login-password" class="login-input" placeholder="password" autocomplete="current-password">
+    <button id="login-submit" class="login-submit">enter</button>
+    <p id="login-status" class="login-status"></p>
+    <a href="main.html" class="login-back">&larr; back to site</a>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://gvfcygdfjimmsrjakodo.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
+    const authClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    const statusEl = document.getElementById('login-status');
+    const submitBtn = document.getElementById('login-submit');
+
+    async function handleLogin() {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        statusEl.textContent = 'enter email and password.';
+        return;
+      }
+
+      statusEl.textContent = 'checking\u2026';
+      submitBtn.disabled = true;
+
+      const { error } = await authClient.auth.signInWithPassword({ email, password });
+
+      submitBtn.disabled = false;
+
+      if (error) {
+        statusEl.textContent = 'access denied.';
+        passwordInput.value = '';
+        return;
+      }
+
+      statusEl.textContent = 'access granted.';
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 500);
+    }
+
+    submitBtn.addEventListener('click', handleLogin);
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+
+    // already logged in? skip straight through
+    (async () => {
+      const { data: { session } } = await authClient.auth.getSession();
+      if (session) window.location.href = 'dashboard.html';
+    })();
+  </script>
+
+</body>
+</html>
