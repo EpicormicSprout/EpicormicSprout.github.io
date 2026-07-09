@@ -131,6 +131,38 @@ textarea.field:focus{border-color:var(--sage)}
 
 .foot{flex-shrink:0; margin-top:14px; font-family:var(--type); font-size:.55rem; color:var(--faint); letter-spacing:.06em; text-align:center}
 
+/* login gate */
+.login-gate{
+  position:fixed; inset:0; z-index:50;
+  background:var(--cream);
+  display:flex; align-items:center; justify-content:center;
+}
+.login-gate .login-box{
+  width:100%; max-width:300px; padding:2.5rem 2rem; text-align:center;
+  background:var(--paper); border:1px solid var(--hair); border-radius:13px;
+}
+.login-gate .login-title{
+  font-family:var(--type); font-size:1.1rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text); padding-bottom:1rem; margin-bottom:1.25rem; border-bottom:1px solid var(--hair);
+}
+.login-gate .login-input{
+  display:block; width:100%; font-family:var(--body); font-size:.88rem;
+  padding:.6rem .8rem; margin-bottom:.75rem; border:1px solid var(--hair); border-radius:5px;
+  background:transparent; color:var(--text);
+}
+.login-gate .login-input::placeholder{color:var(--faint); font-style:italic}
+.login-gate .login-input:focus{outline:none; border-color:var(--sage)}
+.login-gate .login-submit{
+  width:100%; font-family:var(--type); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase;
+  padding:.6rem; border:1px solid var(--text); border-radius:5px; background:transparent; color:var(--text);
+  cursor:pointer; margin-bottom:.75rem; transition:.3s var(--ease);
+}
+.login-gate .login-submit:hover{background:var(--text); color:var(--paper)}
+.login-gate .login-submit:disabled{opacity:.5; cursor:default}
+.login-gate .login-status{
+  font-family:var(--type); font-size:.7rem; color:var(--sage); min-height:1rem;
+}
+
 @media(max-width:768px){
   body{height:auto; min-height:100vh; overflow:auto}
   .wrap{max-width:100%}
@@ -141,6 +173,18 @@ textarea.field:focus{border-color:var(--sage)}
 </head>
 <body>
 <button id="light" title="light / dark">☾</button>
+
+<div id="login-gate" class="login-gate">
+  <div class="login-box">
+    <p class="login-title">login</p>
+    <input type="email" id="gate-email" class="login-input" placeholder="email" autocomplete="username">
+    <input type="password" id="gate-password" class="login-input" placeholder="password" autocomplete="current-password">
+    <button id="gate-submit" class="login-submit">enter</button>
+    <p id="gate-status" class="login-status"></p>
+  </div>
+</div>
+
+<div id="dashboard-content" style="display:none;">
 
 <div class="wrap">
   <header>
@@ -229,6 +273,8 @@ textarea.field:focus{border-color:var(--sage)}
   <p class="foot">the workshop · in situ, Merced & Mariposa</p>
 </div>
 
+</div>
+
 <script>
 /* ── SUPABASE ── */
 const SUPABASE_URL = 'https://gvfcygdfjimmsrjakodo.supabase.co';
@@ -236,18 +282,68 @@ const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* ── AUTH ── */
-(async () => {
+const loginGate = document.getElementById('login-gate');
+const dashboardContent = document.getElementById('dashboard-content');
+const gateEmail = document.getElementById('gate-email');
+const gatePassword = document.getElementById('gate-password');
+const gateStatus = document.getElementById('gate-status');
+const gateSubmit = document.getElementById('gate-submit');
+
+function showDashboard() {
+  loginGate.style.display = 'none';
+  dashboardContent.style.display = 'block';
+}
+
+function showLoginGate() {
+  loginGate.style.display = 'flex';
+  dashboardContent.style.display = 'none';
+}
+
+async function checkSession() {
   const { data: { session } } = await db.auth.getSession();
-  if (!session) {
-    window.location.href = 'login.html';
+  if (session) {
+    showDashboard();
+  } else {
+    showLoginGate();
   }
-})();
+}
+
+async function handleGateLogin() {
+  const email = gateEmail.value.trim();
+  const password = gatePassword.value;
+
+  if (!email || !password) {
+    gateStatus.textContent = 'enter email and password.';
+    return;
+  }
+
+  gateStatus.textContent = 'checking\u2026';
+  gateSubmit.disabled = true;
+
+  const { error } = await db.auth.signInWithPassword({ email, password });
+
+  gateSubmit.disabled = false;
+
+  if (error) {
+    gateStatus.textContent = 'access denied.';
+    gatePassword.value = '';
+    return;
+  }
+
+  gateStatus.textContent = 'access granted.';
+  setTimeout(showDashboard, 400);
+}
+
+gateSubmit.addEventListener('click', handleGateLogin);
+gatePassword.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') handleGateLogin();
+});
 
 db.auth.onAuthStateChange((event) => {
-  if (event === 'SIGNED_OUT') {
-    window.location.href = 'login.html';
-  }
+  if (event === 'SIGNED_OUT') showLoginGate();
 });
+
+checkSession();
 
 /* ── LIGHT / DARK ── */
 const root = document.documentElement, lb = document.getElementById('light');
