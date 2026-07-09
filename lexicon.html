@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexicon &mdash; vedAI.live</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lexicon.css">
+</head>
+<body class="lexicon-page">
+
+  <header class="lex-header">
+    <a href="main.html" class="lex-home-link">vedAI</a>
+    <nav class="main-nav">
+      <a href="main.html#about">about</a>
+      <a href="main.html#projects">projects</a>
+      <a href="main.html#lineage">lineage</a>
+    </nav>
+  </header>
+
+  <main class="lex-main">
+    <h1 class="lex-title">Lexicon</h1>
+    <p class="lex-subtitle">a working dictionary of the terms this research is built from</p>
+
+    <input
+      type="text"
+      id="lex-search"
+      class="lex-search"
+      placeholder="search a term or definition..."
+      autocomplete="off"
+    >
+
+    <div id="lex-status" class="lex-status"></div>
+    <div id="lex-entries" class="lex-entries"></div>
+  </main>
+
+  <script src="lexicon.js"></script>
+</body>
+</html>

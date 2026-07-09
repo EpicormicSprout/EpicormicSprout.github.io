@@ -1,205 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>C.S. Rowe</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vedAI.live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <section id="welcome">
-      <img class="landing" src="img/landing.png" alt="Merced hills" />
-      <div class="welcome-bottom">
-        <img class="self" src="img/self.png" alt="" />
-        <p class="bio">
-          <a href="#cv">Cognitive and Information Science Ph.D. student</a> asking: what happens when you open AI's black box and let it out into the world? Working from non-dual foundations of <a href="#lexicon">consciousness</a> studies and the belief that intelligence is about the world and grown through being in it: I create <a href="#veda">virtual embodied dynamic associations</a> by combining astrocyte analogues with <a href="#dan">dynamic associative networks</a>.
-        </p>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="headpiece-wrap">
+        <img src="img/head-piece.png" alt="UC Merced" class="headpiece">
       </div>
-    </section>
 
-    <section id="veda">
-      <div class="veda-hero">
-        <div class="veda-left">
-          <p>The current AI paradigm's methods of functioning are so inefficient that continuously updating and coupling it to the world pollutes the planet and siphons water supplies from at-risk rural communities, something the Central Valley knows the implications of all too well. Additionally, such continuous updating overwrites what was previously learned, as its optimization methods lack an efficient way to structurally integrate new knowledge.</p>
-          <p>VEDA, Virtual Embodied Dynamic Associations, offer a principled alternative that avoids these limitations from the ground up. Many open questions remain, but the research direction is clear: with an eye on efficiency, take DANs as the neuron core and augment them with astrocyte analogues to gain a dynamical oscillating system that is able to learn continuously, growing new network topologies by interacting with the world it exists in. Patterns that are adaptive are kept and the rest pruned. And, with the addition of astrocyte analogues, gradients build up over time to reach a threshold triggering a sleep cycle where memories are consolidated. Here, abstraction extracts reuseable core patterns of the world.</p>
-        </div>
-        <img class="veda-img" src="img/VEDA.png" alt="VEDA" />
-        <div class="veda-right">
-          <p>This focus on efficiency and neuromorphic inspiration is driven by the realization that, if intelligence depends on our world, then a liveable world is primary. And, as a result, efficiency is mandatory.</p>
-          <p>We know of nothing more efficiently intelligent than our own brains. So they remain the gold standard of what AI must emulate. While our understanding of the brain is immense, we still have significant gaps in our knowledge. Virtual worlds offer a solution without the experimental limitations of human availability and imaging capabilities. We can look inside the mind of VEDA and see what connections were built when. We can replay the entire learning process to fully understand what shaped the topology that leads to emergent mind. This offers a new level of understanding that we cannot achieve through looking at already formed brains alone.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="dan">
-      <img class="dan-img" src="img/DAN.png" alt="DANs" />
-      <div class="dan-text">
-        <p>Dynamic Associative Networks (DANs) are neuromorphic models — inspired by the brain — that give rise to elementary cognitive abilities through on-the-fly learning, from as little as a single exposure to an event. Rather than being trained, they <em>grow</em>: connections form through the co-activation of nodes, a localist Hebbian rule that requires no global error signal propagated back through the network. Each association is laid down locally, where and when it happens.</p>
-
-        <p>Because the network's form is grown directly from an agent's coupling with the world, the structure that represents meaning is constituted by the very associations that are meaningful. Semantics is grounded in syntax, meaning in form — and in a DAN the two are inseparable. What is meaningful is what proves useful for navigating the world, and the world is reflected in the topology that grows to meet it: an intuitive argument for language as a compression of the world, and for why LLMs turned out capable of more than manipulating language.</p>
-
-        <p>These models are meant to learn continuously and efficiently in the world, and to recognize when they lack the stored patterns needed to solve a problem — at which point they can seek a solution through exploration. Their learning is transparent as it forms: there is no black box. And because they avoid a costly training phase and activate only the relevant regions of the network to compute, they promise significant energy savings over today's GPU-based artificial neural networks.</p>
-
-        <p>They are the core of VEDA.</p>
-      </div>
-    </section>
-
-    <section id="cv">
-      <div class="cv-text">
-        <p class="cv-label">Intellectual lineage:</p>
-        <p><a href="https://jeffyoshimi.net" target="_blank">Jeff Yoshimi</a> | Ph.D. advisor</p>
-        <p><a href="https://cogsci.ucmerced.edu/content/christopher-kello" target="_blank">Christopher Kello</a> | Ph.D. advisor</p>
-        <p><a href="https://www.afbeavers.net/drg/members" target="_blank">Tony Beavers</a> | DAN creator, research mentor</p>
-        <p><a href="https://philpeople.org/profiles/jonathan-shear" target="_blank">Jonathan Shear</a> | Lodestar</p>
-        <br />
-        <p>VCU &nbsp; B.A. Philosophy</p>
-        <p>CPH &nbsp; B.S. Computer Science</p>
-        <p>UCM &nbsp; Ph.D. student Cognitive & Info Science</p>
-        <br />
-        <a class="cv-download" href="img/CV2026.pdf" download>Curriculum Vitae</a>
-      </div>
-      <img class="cv-img" src="img/CV.png" alt="" />
-    </section>
-
-    <section id="lexicon">
-      <img class="chopsuey-img" src="img/chopsuey.png" alt="Rice Bowl Chop Suey" />
-      <div class="order-slip">
-        <img class="cs-stamp" src="img/CS.png" alt="CS" />
-        <p class="order-option">□ <a href="#" onclick="openModal(); return false;">Dine in</a></p>
-        <p class="order-option">□ <a href="#" onclick="openTakeout(); return false;">Take out</a></p>
-      </div>
-      <p class="copyright">© 2026 C.S. Rowe: all art in situ in Merced & Mariposa, California</p>
-    </section>
-
-    <nav class="dot-nav">
-      <a href="#welcome" class="dot" data-label="Welcome"></a>
-      <a href="#veda" class="dot" data-label="VEDA"></a>
-      <a href="#dan" class="dot" data-label="DAN"></a>
-      <a href="#cv" class="dot" data-label="Lineage"></a>
-      <a href="#lexicon" class="dot" data-label="Lexicon"></a>
-    </nav>
-
-    <div id="chop-suey-modal" style="display:none;">
-      <div class="modal-backdrop" onclick="closeModal()"></div>
-      <div class="modal-menu">
-        <img class="menu-bg" src="img/Chop_Suey.png" alt="Chop Suey Menu" />
-        <div class="menu-content">
-          <input
-            class="menu-search"
-            type="text"
-            placeholder="enter a word"
-            oninput="searchLexicon(this.value)"
-          />
-          <div class="menu-results" id="menu-results"></div>
-        </div>
-      </div>
+      <nav class="main-nav">
+        <a href="#about">about</a>
+        <a href="#projects">projects</a>
+        <a href="#lineage">lineage</a>
+      </nav>
     </div>
+  </header>
 
-    <script>
-      const SUPABASE_URL = 'https://gvfcygdfjimmsrjakodo.supabase.co';
-      const SUPABASE_KEY = 'sb_publishable_sVgHLp9Kh_xeDuBqGWegow_lamYMIF2';
+  <section id="about" class="about-wrap reveal">
+    <img src="img/about.png" alt="About" class="about-img">
+  </section>
 
-      function openModal() {
-        document.getElementById('chop-suey-modal').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
+  <section id="projects" class="projects-wrap reveal">
+    <div class="strips">
 
-      function closeModal() {
-        document.getElementById('chop-suey-modal').style.display = 'none';
-        document.body.style.overflow = '';
-        document.getElementById('menu-results').innerHTML = '';
-        document.querySelector('.menu-search').value = '';
-      }
-
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') { closeModal(); closeTakeout(); }
-      });
-
-      async function searchLexicon(query) {
-        const results = document.getElementById('menu-results');
-        if (!query || query.length < 2) {
-          results.innerHTML = '';
-          return;
-        }
-        const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/terms?or=(term.ilike.*${query}*,definition.ilike.*${query}*)&select=term,definition,etymology,notes,source`,
-          {
-            headers: {
-              'apikey': SUPABASE_KEY,
-              'Authorization': `Bearer ${SUPABASE_KEY}`
-            }
-          }
-        );
-        const data = await res.json();
-        if (data.length === 0) {
-          results.innerHTML = '<p class="no-results">No results.</p>';
-          return;
-        }
-        results.innerHTML = data.map(entry => `
-          <div class="menu-entry">
-            <p class="entry-term">${entry.term}</p>
-            ${entry.etymology ? `<p class="entry-etymology">${entry.etymology}</p>` : ''}
-            <p class="entry-def">${entry.definition}</p>
-            ${entry.notes ? `<p class="entry-notes">${entry.notes}</p>` : ''}
-            ${entry.source ? `<p class="entry-source">— ${entry.source}</p>` : ''}
-          </div>
-        `).join('<hr class="entry-divider" />');
-      }
-    </script>
-
-    <div id="takeout-modal" style="display:none;">
-      <div class="modal-backdrop" onclick="closeTakeout()"></div>
-      <div class="modal-menu">
-        <img class="menu-bg" src="img/Chop_Suey.png" alt="Chop Suey Menu" />
-        <div class="menu-content">
-          <input class="menu-search" type="password" placeholder="enter your password" onkeydown="handlePassword(event)" id="password-input" />
-          <p class="menu-response" id="password-response"></p>
+      <div class="strip" data-project="veda">
+        <div class="strip-label">VEDA</div>
+        <div class="strip-panel">
+          <h3>VEDA</h3>
+          <p>Virtual Embodied Dynamic Associations: an astrocyte-neuron coupled architecture for embodied, continuous learning.</p>
+          <a href="#" class="strip-link">GitHub repo &rarr;</a>
         </div>
       </div>
+
+      <div class="strip" data-project="dan">
+        <div class="strip-label">DAN</div>
+        <div class="strip-panel">
+          <h3>DANs</h3>
+          <p>Dynamic Associative Networks: binary, boolean-structured associative networks developed with Dr. Anthony Beavers.</p>
+          <a href="#" class="strip-link">GitHub repo &rarr;</a>
+        </div>
+      </div>
+
+      <div class="strip" data-project="lex">
+        <div class="strip-label">LEX</div>
+        <div class="strip-panel">
+          <h3>Lexicon</h3>
+          <p>A working dictionary of the terms and concepts this research is built from.</p>
+          <a href="lexicon.html" id="lex-open-link" class="strip-link">Enter the lexicon &rarr;</a>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <script>
-      function openTakeout() {
-        document.getElementById('takeout-modal').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => document.getElementById('password-input').focus(), 100);
-      }
-      function closeTakeout() {
-        document.getElementById('takeout-modal').style.display = 'none';
-        document.body.style.overflow = '';
-        document.getElementById('password-input').value = '';
-        document.getElementById('password-response').textContent = '';
-      }
-      async function handlePassword(e) {
-        if (e.key !== 'Enter') return;
-        const val = document.getElementById('password-input').value;
-        const response = document.getElementById('password-response');
-        response.textContent = '...';
-        try {
-          const res = await fetch('https://gvfcygdfjimmsrjakodo.supabase.co/functions/v1/verify-password', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password: val })
-          });
-          const data = await res.json();
-          if (data.success) {
-            response.textContent = 'access granted.';
-            sessionStorage.setItem('dashboard_token', 'true');
-            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
-          } else {
-            response.textContent = 'access denied.';
-            setTimeout(() => { document.getElementById('password-input').value = ''; response.textContent = ''; }, 1500);
-          }
-        } catch (err) {
-          response.textContent = 'connection error.';
-          setTimeout(() => { document.getElementById('password-input').value = ''; response.textContent = ''; }, 1500);
-        }
-      }
-    </script>
+  <section id="lineage" class="lineage-wrap reveal">
+    <img src="img/lineage.png" alt="Lineage" class="lineage-img">
+    <div class="lineage-text">
+      <p class="lineage-heading">Intellectual Lineage:</p>
 
-  </body>
+      <p class="lineage-line"><a href="https://jeffyoshimi.net">Jeff Yoshimi</a> | Ph.D. advisor</p>
+      <p class="lineage-line"><a href="https://cogsci.ucmerced.edu/content/christopher-kello">Christopher Kello</a> | Ph.D. advisor</p>
+      <p class="lineage-line"><a href="https://www.afbeavers.net/drg/members">Tony Beavers</a> | DAN creator, research mentor</p>
+      <p class="lineage-line"><a href="https://philpeople.org/profiles/jonathan-shear">Jonathan Shear</a> | Lodestar</p>
+
+      <p class="lineage-line"><a href="https://philosophy.vcu.edu/">VCU</a> B.A. Philosophy</p>
+      <p class="lineage-line"><a href="https://www.humboldt.edu/computer-science">CPH</a> B.S. Computer Science</p>
+      <p class="lineage-line"><a href="https://cogsci.ucmerced.edu/">UCM</a> Ph.D. student Cognitive &amp; Info Science</p>
+
+      <p class="lineage-line"><a href="https://vedai.live/img/CV2026.pdf">Curriculum Vitae</a></p>
+    </div>
+  </section>
+
+  <div id="lex-modal-backdrop" class="lex-modal-backdrop">
+    <div class="lex-modal">
+      <button id="lex-modal-close" class="lex-modal-close" aria-label="Close lexicon">&times;</button>
+      <img src="img/lexicon-popup.jpg" alt="" class="lex-modal-bg">
+
+      <input
+        type="text"
+        id="lex-modal-input"
+        class="lex-modal-input"
+        autocomplete="off"
+        spellcheck="false"
+      >
+
+      <div id="lex-modal-results" class="lex-modal-results"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
