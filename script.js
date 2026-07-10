@@ -40,16 +40,13 @@ strips.forEach(strip => {
 const hero = document.querySelector('.hero');
 const nav = document.querySelector('.main-nav');
 
-const navObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    nav.classList.toggle('is-fixed', !entry.isIntersecting);
-  });
-}, {
-  threshold: 0,
-  rootMargin: '0px 0px -40% 0px' // trigger once hero is ~40% scrolled past, not fully gone
-});
+function updateNavFixed() {
+  const triggerPoint = hero.offsetHeight * 0.4;
+  nav.classList.toggle('is-fixed', window.scrollY > triggerPoint);
+}
 
-navObserver.observe(hero);
+window.addEventListener('scroll', updateNavFixed, { passive: true });
+updateNavFixed(); // run once on load in case the page opens already scrolled
 
 /* ---------- lexicon popup modal ---------- */
 
