@@ -25,6 +25,12 @@ body {
   background-position: left top, center;
   background-size: auto 100%, cover;
   background-attachment: fixed, fixed;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+body.is-loaded {
+  opacity: 1;
 }
 
 /* ---------- hero (headpiece + nav) ---------- */

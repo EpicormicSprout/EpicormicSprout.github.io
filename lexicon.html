@@ -6,8 +6,14 @@
 <title>Lexicon &mdash; vedAI.live</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="lexicon.css">
+<noscript><style>body { opacity: 1 !important; }</style></noscript>
 </head>
 <body class="lexicon-page">
+<script>
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  document.body.classList.add('is-loaded');
+}));
+</script>
 
   <header class="lex-header">
     <a href="main.html" class="lex-home-link">vedAI</a>
