@@ -19,7 +19,7 @@ body {
   font-family: 'Merriweather', serif;
   background-color: #f7f2ea;
   background-image:
-    url('img/palm-shadow-processed.png'),
+    url('img/palm-shadow-processed.webp'),
     url('img/paper-texture-processed.jpg');
   background-repeat: no-repeat, no-repeat;
   background-position: left top, center;
